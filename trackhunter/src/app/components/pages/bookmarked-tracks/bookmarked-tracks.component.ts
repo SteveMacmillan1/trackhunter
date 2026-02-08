@@ -95,6 +95,11 @@ export class BookmarkedTracksComponent {
       })
       ).subscribe({
         next: (resp) => {
+          /* 
+            Tracks exported successfully
+            They're deleted as bookmarks from user data by server
+            So refresh page to remove the bookmark cards, reflecting they've been deleted from user data
+          */
           this.ngOnInit();
           this.exportForm.get('playlistName')?.reset();
           const p = document.getElementById('p-export-success') as HTMLElement;
