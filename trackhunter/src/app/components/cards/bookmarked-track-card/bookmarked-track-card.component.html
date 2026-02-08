@@ -1,0 +1,50 @@
+<div [id]="track.trackId" class="card slide-fade-in">
+  <div class="card-bg">
+    <img [src]="track.albumImgUrl" />
+  </div>
+
+  <div class="content">
+    <div class="album-cover-div">
+      <img class="album-cover-img" [src]="track.albumImgUrl" [title]="track.albumName" />
+    </div>
+    <div class="card-text">
+      <div>
+        <p class="track-title">
+          <fa-icon 
+            [icon]="bookmarkIcon"
+            [id]="'bookmark-icon-' + track.trackId" 
+            class="bookmark-icon"
+            title="Remove from Bookmarked List" 
+            (click)="onRemoveBookmark()"
+            (mouseenter)="hoverBookmarkIcon()"
+            (mouseleave)="unhoverBookmarkIcon()">
+          </fa-icon>
+          {{ truncTrackName }}
+        </p>
+      </div>
+      <div>
+        <p 
+          class="track-artist">
+          {{ truncArtistName }}
+        </p>
+      </div>
+      <!-- <p class="track-album">{{ track.albumName }}</p> -->
+    </div>
+
+    <div class="player-div">
+      <audio 
+        [id]="'audio-' + track.trackId" 
+        [attr.src]="track.trackPreviewUrl" 
+        controls 
+        controlsList="nodownload noplaybackrate" 
+        preload="auto">
+      </audio>
+      <a [href]="'https://open.spotify.com/track/' + track.trackId" target="_blank">
+        <div class="view-on-spotify-div-player">
+          <p class="view-on-spotify-text">View on</p>
+          <img class="spotify-logo" src="/../../../assets/img/spotify.svg">
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

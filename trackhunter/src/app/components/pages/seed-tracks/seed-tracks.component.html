@@ -1,0 +1,57 @@
+<section id="select-seed-track">
+  <div id="search-div" class="slide-fade-in">
+    <h2>1) Start with a Song You Like</h2>
+    <input 
+      type="text" 
+      name="artist" 
+      id="search-field" 
+      placeholder="e.g. Toto - Africa"
+      autocomplete="off" 
+      autofocus
+      (click)="onClickMagGlass($event)"
+      (keydown.enter)="submitSearch()">
+      <!-- Hover hotzone for hand pointer cursor -->
+      <span id="mag-glass-overlay" (click)="submitSearch()"></span>
+  </div>
+
+  <div id="spinner-div">
+    <ngx-spinner 
+      bdColor="rgba(0, 0, 0, 0.8)" 
+      size="medium" 
+      color="#e8e6e3" 
+      type="ball-atom" 
+      [fullScreen]="false">
+      <!-- <p style="color: #e8e6e3" > Loading... </p> -->
+    </ngx-spinner>
+  </div>
+  
+  <div class="card-containter-div seed-card-container-div">
+  <div id="results-div" class="slide-fade-in" *ngIf="isLoaded() && hasResults()">
+      <h2 id="confirm">2) Did We Find It?</h2>
+      <!-- Show each array item in the results as a "song card" on page -->
+      <app-seed-track-card
+          *ngFor="let track of tracks" 
+          [track]="track"
+          (onSelectTrack)="selectTrack(track)">
+      </app-seed-track-card>
+  </div>
+
+  <div id="im-looking-for-div">
+    <div id="popularity-div" *ngIf="selectedTrackId">
+      <h2>3) I'm Looking For...</h2>
+      <div id="pop-slider-div">
+        <input (change)="onPopularityChange()" id="popularity-slider" type="range" min="0" max="100" value="50" class="slider">
+        <label id="deep-tracks-text" for="popularity">Deep Tracks</label>
+        <label id="big-hits-text" for="popularity">Big Hits</label>
+      </div>
+    </div>
+    <div id="submit-div" *ngIf="selectedTrackId">
+      <a [routerLink]="['/result-tracks', selectedTrackId, popularity]">
+        <input type="submit" class="green-btn big-btn" value="Get New Songs">
+      </a>
+    </div>
+  </div>
+  <!-- Show database or validation errors as needed -->
+  <p class="val-error" *ngIf="isSearchSubmitted() && isLoaded() && !hasResults()">No results found, please try a different search</p>
+</div>
+</section>

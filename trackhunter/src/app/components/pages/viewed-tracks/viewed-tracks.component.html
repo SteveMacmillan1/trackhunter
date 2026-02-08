@@ -1,0 +1,22 @@
+<h2>My Viewed Tracks <fa-icon [icon]="this.viewedIcon"></fa-icon> </h2>
+<p>50 most recently viewed tracks:</p>
+<br />
+
+<div id="spinner-div">
+  <ngx-spinner 
+    bdColor="rgba(0, 0, 0, 0.8)" 
+    size="medium" 
+    color="#e8e6e3" 
+    type="ball-atom" 
+    [fullScreen]="false">
+  </ngx-spinner>
+</div>
+
+<div class="card-containter-div">
+  <div id="viewed-tracks-container" class="card-container">
+    <app-bookmarked-track-card 
+      *ngFor="let track of tracksChunk" 
+      [track]="track">
+    </app-bookmarked-track-card> 
+  </div>
+</div>

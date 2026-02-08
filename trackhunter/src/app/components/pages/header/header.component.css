@@ -1,0 +1,26 @@
+header {
+  margin: 0 auto;
+  /* width: 81vw; */
+}
+
+p {
+  float: right;
+  font-size: 12px;
+}
+
+img {
+  float: left;
+  margin: 0 0 4px 0;
+  padding: 0;
+  width: 150px;
+  height: 50px;
+}
+
+hr {
+  clear: both;
+}
+
+app-dropdown-menu {
+  float: right;
+  margin-left: 1%;
+}

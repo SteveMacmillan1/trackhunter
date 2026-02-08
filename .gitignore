@@ -1,0 +1,8 @@
+docs/
+nodeserver/.env
+nodeserver/oldrecommendations.json
+nodeserver/spotify-api-key.txt
+nodeserver/client-secret.txt
+nodeserver/encryption-secret.txt
+nodeserver/node_modules
+trackhunter/node_modules

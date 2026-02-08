@@ -1,0 +1,22 @@
+div.card:hover {
+  background-image: linear-gradient(to right, rgba(38,41,43,1) 0%, rgba(38,41,43,0) 100%);
+  transition: background-color 0.2s ease;
+}
+
+.bgSelected {
+  background-color: #3b4043 !important;
+}
+
+.bgNotSelected {
+  background-color: #181a1b;
+}
+
+@media only screen and (max-width: 730px) {
+  .card {
+      height: 110px;
+  }
+
+  .card-text {
+    height: 100%;
+  }
+}

@@ -1,0 +1,109 @@
+<div id="alert-bubble-underlay" *ngIf="isLoaded() && tracks"></div>
+<div id="alert-bubble" class="alert-bubble" *ngIf="isLoaded() && !isLoggedIn() && tracks">
+  <span class="alert-bubble-close-btn" (click)="closeBubble()">&times;</span>
+  <div class="bubble-content">
+    <ng-container [ngSwitch]="currPage">
+      <div *ngSwitchCase="1">
+        <p class="title">Spotify API<br />/recommendations Deprecated</p>
+        <ul>
+          <li>Support ended Nov 2024 <a target="_blank" href="https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api">(more)</a></li>
+          <li>The page still dynamically loads content from a mock API response</li>
+          <li>But since the mock response is hardcoded, the song recommendations are canned</li>
+        </ul>
+      </div>
+      <div *ngSwitchCase="2">
+        <p class="title">Login/Register<br />for more features!</p>
+        <ul>
+          <li>Export songs to your Spotify account</li>
+          <li>Recommended songs will only ever be shown once</li>
+          <li>Artists can be banned from appearing in results</li>
+        </ul>
+      </div>
+    </ng-container>
+  </div>
+  <div class="page-controls">
+    <div class="alert-bubble-dots">
+      <span *ngFor="let page of [1,2]"
+            [class.active]="currPage === page"
+            (click)="goToPage(page)"></span>
+    </div>
+  </div>
+  <button class="green-btn" (click)="closeBubble()">OK</button>
+</div>
+
+<div id="alert-bubble" class="alert-bubble" *ngIf="isLoaded() && isLoggedIn() && tracks">
+  <span class="alert-bubble-close-btn" (click)="closeBubble()">&times;</span>
+  <div class="bubble-content">
+    <ng-container [ngSwitch]="currPage">
+      <div *ngSwitchCase="1">
+        <p class="title">Spotify API<br />/recommendations Deprecated</p>
+        <ul>
+          <li>Support ended Nov 2024 <a target="_blank" href="https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api">(more)</a></li>
+          <li>The page still dynamically loads content from a mock API response</li>
+          <li>But since the mock response is hardcoded, the song recommendations are canned</li>
+        </ul>
+      </div>
+      <div *ngSwitchCase="2">
+        <p class="title">Getting Started</p>
+        <ul>
+          <li><fa-icon class="bookmark-icon" [icon]="bookmarkIcon"></fa-icon> Click to bookmark track</li>
+          <li><fa-icon class="ban-icon" [icon]="banIcon"></fa-icon> Click artist name to ban them from future results</li>
+        </ul>
+      </div>
+      <div *ngSwitchCase="3">
+        <p class="title">Exporting Songs</p>
+        <p class="alert-bubble-text">Navigate to "Bookmarked Tracks" from menu to access:</p>
+        <img id="export-tracks-img" src="..\..\..\..\assets\img\export.png">
+      </div>
+    </ng-container>
+  </div>
+  <div class="page-controls">
+    <div class="alert-bubble-dots">
+      <span *ngFor="let page of [1,2,3]"
+            [class.active]="currPage === page"
+            (click)="goToPage(page)"></span>
+    </div>
+  </div>
+  <button class="green-btn" (click)="closeBubble()">OK</button>
+</div>
+
+
+
+
+<div id="spinner-div">
+  <ngx-spinner 
+    bdColor="rgba(0, 0, 0, 0.8)" 
+    size="medium" 
+    color="#e8e6e3" 
+    type="pacman" 
+    [fullScreen]="false">
+  </ngx-spinner>
+</div>
+
+<div id="result-tracks-div" class="card-containter-div">
+  <ng-container class="card-container" *ngIf="isLoaded()">
+    <app-recommended-track-card 
+      *ngFor="let track of tracks"
+      [track]="track">
+    </app-recommended-track-card>
+    <div id="next-results-btn-div" *ngIf="hasTracks()">
+      <input 
+        id="next-btn" 
+        type="submit" 
+        class="green-btn big-btn" 
+        value="Next"
+        (click)="getRecTracks()"
+        [routerLink]="['/result-tracks', this.seedTrackId, this.popularity]">
+    </div>
+  </ng-container>
+</div>
+
+<div id="no-more-results-div" class="slide-fade-in" *ngIf="!this.hasTracks() && this.isLoaded()">
+  <br />
+  <p>No more recommendations!</p>
+  <br />
+  <p id="p-reset-tracks" *ngIf="isLoggedIn()"><a (click)="resetViewedTracks()">Reset</a> viewed tracks.</p>
+  <p *ngIf="!isLoggedIn()">To start over, please clear temporary data from your browser's settings (or <a [routerLink]="'/register'">create an account</a>).</p>
+  <br />
+  <p>Return to <a [routerLink]="'/'">search</a></p>
+</div>

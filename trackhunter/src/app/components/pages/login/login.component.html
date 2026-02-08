@@ -1,0 +1,40 @@
+<div class="login-reg-div slide-fade-in">
+  <h2>Login</h2>
+  <form [formGroup]="loginForm" (submit)="submitLogin()">
+      <table>
+        <tr>
+          <td></td>
+          <!-- Validation messages for field errors-->
+          <td>
+            <p id='val-msg' class="val-error" *ngIf="submitAttempted">{{ valMsg }}</p>
+            <!-- <p class="val-error" *ngIf="emailVal() && passwordVal() && this.respStatus === 401">
+                *Login failed: incorrect password</p>
+            <p class="val-error" *ngIf="emailVal() && passwordVal() && this.respStatus === 404">
+                *Email not found.<br />
+                Would you like to <a [routerLink]="['/register']" [queryParams]="{email: this.unregisteredEmail}">register?</a></p> -->
+          </td>
+        </tr>
+        <tr>
+          <td><label for="userEmail">Email:</label></td>
+          <td><input type="text" class="email" formControlName="userEmail"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+            <!-- <p class="val-error" *ngIf="!passwordVal() && submitAttempted">{{ passwordValMsg }}</p> -->
+          </td>
+        </tr>
+        <tr>
+          <td><label for="userPassword">Password:</label></td>
+          <td><input type="password" class="password" formControlName="userPassword"></td>
+          <!-- Validation message for blank password -->
+        </tr>
+        <tr>
+            <td></td>
+            <td class="submit-btn-td"><input id="login-form-submit" class="green-btn" type="submit" value="Login"></td>
+        </tr>
+      </table>
+  </form>
+  <br />
+  <p id="not-reg-yet-text">Not registered yet? Get started <a routerLink="/register">here!</a></p>
+</div>

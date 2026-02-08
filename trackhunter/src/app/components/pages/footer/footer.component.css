@@ -1,0 +1,75 @@
+footer {
+  text-align: center;
+  height: 7vh;
+  max-width: inherit;
+  margin: 0 auto;
+}
+
+#footer-content {
+  position: relative;
+}
+
+p {
+  color: #e8e6e37d;
+  margin: 0;
+  padding: 0;
+}
+
+#pwd-by-txt {
+  font-size: 12px;
+  flex: 1;
+}
+
+#pwd-by-div {
+  margin: 0 auto;
+}
+
+#copyright {
+  position: absolute;
+  top: 3px;
+  right: 0;
+  font-size: 11px;
+}
+
+#badges-div {
+  position: absolute;
+}
+
+img {
+  position: relative;
+  top: 4px;
+}
+
+#angular-logo {
+  float: left;
+  width: 21px;
+  height: 21px;
+  opacity: 0.8;
+  pointer-events: auto;
+}
+
+#node-logo {
+  float: left;
+  width: 20px;
+  height: 20px;
+  margin: 0 2px;
+  opacity: 0.8;
+  pointer-events: auto;
+}
+
+#mongo-logo {
+  top: 5px;
+  float: left;
+  width: 12px;
+  height: 20px;
+  margin: 0 0 0 2px;
+  opacity: 0.8;
+  pointer-events: auto;
+}
+
+#spotify {
+  display: inline;
+  width: 64px;
+  height: 18px;
+  pointer-events: auto;
+}

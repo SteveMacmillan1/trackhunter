@@ -1,0 +1,30 @@
+.alert-bubble .bubble-content img {
+  margin-top: 10px;
+}
+
+#no-more-results-div {
+  font-size: 16px;
+}
+
+a {
+  cursor: pointer;
+}
+
+#export-tracks-img {
+  width: 100%;
+}
+
+.green-btn {
+  display: block;
+  float: none;
+  margin: 15px auto 0px auto;
+  padding: 3px 17px;
+}
+
+#next-results-btn-div a:link, #next-results-btn-div a:visited {
+  text-decoration: none;
+}
+
+#next-btn {
+  cursor: pointer;
+}

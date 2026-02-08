@@ -1,0 +1,18 @@
+<div id="spinner-div">
+  <ngx-spinner 
+    bdColor="rgba(0, 0, 0, 0.8)" 
+    size="medium" 
+    color="#e8e6e3" 
+    type="ball-atom" 
+    [fullScreen]="false">
+  </ngx-spinner>
+</div>
+
+<h2>My Banned Artists <fa-icon class="ban-icon" [icon]="banIcon"></fa-icon></h2>
+<p>Banned artists will not appear in song recommendation results.</p>
+<br />
+<!-- Show one artist card for each banned artist -->
+<app-banned-artist-card 
+  *ngFor="let artist of bannedArtists" 
+  [bannedArtist]="artist">
+</app-banned-artist-card> 

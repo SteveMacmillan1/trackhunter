@@ -1,0 +1,65 @@
+<div id="alert-bubble-underlay"></div>
+<div id="alert-bubble" class="alert-bubble">
+  <span class="alert-bubble-close-btn" (click)="closeBubble()">&times;</span>
+  <div class="bubble-content">
+    <p class="title">Export to Spotify Account<br />Dev License Limitation</p>
+    <ul>
+      <li>Your Spotify account email must be added to TrackHunter's allowlist before this feature can work</li>
+      <li>This is because TrackHunter runs in dev mode, not extended quota mode (<a target="_blank" href="https://developer.spotify.com/documentation/web-api/concepts/quota-modes">more</a>)</li>
+      <li>Please <a target="_blank" routerLink="'/contact'">contact</a> me to add your account email before exporting (or I'd be happy to demo in an interview)</li>
+    </ul>
+  </div>
+  <div id="button-container">
+    <button class="green-btn" (click)="closeBubble()">No Thanks</button>
+    <button class="green-btn" (click)="addPermissions()">Got it</button>
+  </div>
+</div>
+
+<div id="spinner-div">
+  <ngx-spinner 
+    bdColor="rgba(0, 0, 0, 0.8)" 
+    size="medium" 
+    color="#e8e6e3" 
+    type="ball-atom" 
+    [fullScreen]="false">
+  </ngx-spinner>
+</div>
+
+<div id="bookmark-tracks-title-div">
+  <h2>My Bookmarked Tracks
+    <fa-icon [icon]="bookmarkIcon"></fa-icon>
+  </h2>
+  <p>Tracks shown in chronological order bookmarked</p>
+  <br />
+</div>
+
+
+<aside *ngIf="!this.permissionCode">
+  <h3>Export Tracks to Spotify</h3>
+  <div>
+    <button class="green-btn" type="button" (click)="showAlertBubble()">Add App Permissions</button>
+  </div>
+  <p class="val-error" *ngIf="permissionError == 'access_denied'">*App permission must be granted to export</p>
+</aside>
+
+<!-- Show "enter playlist name and export" aside if user has granted app permissions in Spotify -->
+<aside *ngIf="permissionCode">
+  <h3>Export Tracks to Spotify</h3>
+  <form [formGroup]="exportForm" (submit)="exportTracksSubmit()">
+      <label for="playlistName">Playlist Name:</label>
+      <input id="playlistName" type="text" formControlName="playlistName">
+      <div>
+        <input type="submit" class="green-btn" value="Export">
+      </div>
+  </form>
+</aside>
+
+<div class="card-containter-div">
+  <ng-container class="card-container">
+    <app-bookmarked-track-card 
+      *ngFor="let track of bookmarkedTracks" 
+        [track]="track">
+    </app-bookmarked-track-card> 
+  </ng-container>
+  <p id="p-export-success">Successfully exported to your Spotify account.</p>
+</div>

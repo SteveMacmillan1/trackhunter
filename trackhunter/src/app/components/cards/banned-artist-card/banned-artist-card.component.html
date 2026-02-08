@@ -1,0 +1,22 @@
+<div class="artist-div slide-fade-in" [id]="bannedArtist.artistId">
+  <img class="artist-img" [src]="bannedArtist.artistImgUrl" [title]="bannedArtist.artistName" />
+  <div class="artist-card-text">
+    <div>
+      <p class="artist-name">
+        <fa-icon 
+            [id]="'unban-icon-' + bannedArtist.artistId" 
+            class="unban-icon"
+            title="Restore Artist" 
+            (click)="onClickUnbanArtist($event)" 
+            [icon]="banIcon">
+        </fa-icon>
+        {{ truncArtistName }}
+      </p>
+    </div>
+    <a [href]="'https://open.spotify.com/artist/' + bannedArtist.artistId" target="_blank">
+      <div class="view-on-spotify-div">
+        <p class="view-on-spotify-text">View on</p><img class="spotify-logo" src="/../../../assets/img/spotify.png">
+      </div>
+    </a>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<!-- The "song card" for seed track search results -->
+<div class="card" [id]="'seed-div-' + track.id" *ngIf="hasAllFields()">
+  <div class="card-bg">
+    <img [src]="track.album.images[1].url" />
+  </div>
+  <div class="content" (click)="onSelect(track)">
+    <div class="album-cover-div">
+      <img class="album-cover-img" [src]="track.album.images[1].url" [title]="track.album.name" />
+    </div>
+    <div class="card-text">
+      <p class="track-title">{{ truncTrackName }}</p>
+      <p class="track-artist">{{ truncArtistName }}</p>
+      <!-- <p class="track-album">{{ truncAlbumName }}</p> -->
+    </div>
+    <div class="view-on-spotify-div" (click)="stopPropagation($event)">
+      <a [href]="'https://open.spotify.com/track/' + track.id" target="_blank">
+        <div>
+          <p class="view-on-spotify-text">View on</p><img class="spotify-logo" src="/../../../assets/img/spotify.svg">
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

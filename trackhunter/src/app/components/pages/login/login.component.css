@@ -1,0 +1,29 @@
+label {
+    float: left;
+    clear: left;
+    min-width: 100px;
+    margin: 4px 10px 4px 0px;
+}
+
+table tr td {
+    margin: 0;
+    padding: 0;
+}
+
+.submit-btn-td {
+    float: right;
+}
+
+#not-reg-yet-txt {
+  font-size: 14px;
+  text-align: center;
+}
+
+input[type="text"], input[type="password"] {
+  margin: 4px 10px 4px 0px;
+  float: left;
+  color: #e8e6e3;
+  background-color: #2d2d2d;
+  border: 1px solid #e8e6e37d;
+  border-radius: 5px;
+}

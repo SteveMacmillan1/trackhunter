@@ -1,0 +1,90 @@
+aside {
+  float: right;
+  margin-top: 1%;
+  border: 1px dashed black;
+  padding: 10px;
+  border: 1px dashed #e8e6e37d;
+  border-radius: 15px;
+}
+
+h3 {
+  text-align: center;
+}
+
+fa-icon {
+  color: #1DB954;
+}
+
+label {
+    float: left;
+    clear: left;
+    margin: 8px 3px;
+}
+
+input {
+    float: left;
+}
+
+button {
+    margin: 8px auto 0;
+    display: block;
+}
+
+aside div {
+  clear: left;
+  display: flex;
+  justify-content: right;
+}
+
+input[type=submit] {
+    margin-right: 3px;
+}
+
+input[type=text] {
+  color: #e8e6e3;;
+  background-color: #26292b;
+  border: 1px solid #e8e6e37a;
+  border-radius: 8px;
+  margin: 8px 3px;
+  width: 140px;
+}
+
+app-bookmarked-track-card {
+    clear: both;
+}
+
+#bookmark-tracks-title-div {
+  float: left;
+}
+
+#alert-bubble-underlay, #alert-bubble {
+  display: none;
+}
+
+#p-export-success {
+  visibility: hidden;
+  clear: left;
+  text-align: center;
+  margin-top: 18%;
+}
+
+.green-btn {
+  display: block;
+  float: none;
+  margin: 15px auto 0px auto;
+  padding: 3px 17px;
+}
+
+#button-container {
+  display: flex;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 670px) {
+  aside {
+    float: none;
+    clear: both;
+    width: 80%;
+    margin: 0 auto;
+  }
+}

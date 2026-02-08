@@ -1,0 +1,44 @@
+<div class="login-reg-div slide-fade-in">
+  <h2>Register</h2>
+  <p>Password requirements:</p>
+  <!-- Highlight met password requirements #1DB954 as user types -->
+  <ul>
+    <li><fa-icon [icon]="checkIcon" [class.is-valid]="lowerCaseVal()"></fa-icon>One lowercase letter</li>
+    <li><fa-icon [icon]="checkIcon" [class.is-valid]="upperCaseVal()"></fa-icon>One uppercase letter</li>
+    <li><fa-icon [icon]="checkIcon" [class.is-valid]="numberVal()"></fa-icon>One number</li>
+    <li><fa-icon [icon]="checkIcon" [class.is-valid]="specCharVal()"></fa-icon>One special character</li>
+    <li><fa-icon [icon]="checkIcon" [class.is-valid]="lengthVal()"></fa-icon>8-16 characters in length</li>
+    <li><fa-icon [icon]="checkIcon" [class.is-valid]="matchVal()"></fa-icon>Passwords must match</li>
+  </ul>
+  <form [formGroup]="registerForm" (submit)="submitRegister()">
+      <table>
+        <tr>
+          <td></td>
+          <!-- Show email validation msg if user has submitted with format error or database conflict -->
+          <td><p id="val-msg" class="val-error" *ngIf="submitAttempted">{{ valMsg }}</td>
+        </tr>
+        <tr>
+            <td><label for="userEmail">Email:</label></td>
+            <td><input type="text" formControlName="userEmail"></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+            <td><label for="userPassword">Password:</label></td>
+            <td><input type="password" formControlName="userPassword"></td>
+        </tr>
+        <tr>
+            <td><label for="confirmPassword">Confirm:</label></td>
+            <td><input type="password" formControlName="confPassword"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td class="submit-btn-td"><input class="green-btn" type="submit" value="Register"></td>
+            <td></td>
+        </tr>
+      </table>
+  </form>
+</div>

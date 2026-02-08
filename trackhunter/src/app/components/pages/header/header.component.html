@@ -1,0 +1,6 @@
+<header>
+    <a href="."><img id="logo" src="../../../../assets/img/logo.png"></a>
+    <app-dropdown-menu></app-dropdown-menu>
+    <p *ngIf="isLoggedIn()">{{ getSessionEmail() }}</p>
+    <hr />
+</header>

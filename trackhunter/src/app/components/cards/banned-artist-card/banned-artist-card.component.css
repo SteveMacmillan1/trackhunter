@@ -1,0 +1,88 @@
+.artist-div {
+  height: 150px;
+  min-height: 150px;
+  margin-bottom: 1.5vh;
+  width: 600px;
+  margin-left: 5%;
+  padding: 1%;
+  line-height: 0.5em;
+}
+
+.artist-card-text {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  height: 100%;
+  position: relative;
+  top: 15%;
+}
+
+img {
+    float: left;
+    clear: left;
+    padding-right: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+.ban-icon {
+  margin-right: 5px;
+  display: none;
+  color: #fa3939;
+  opacity: 0.35;
+}
+
+.unban-icon {
+    color: #fa3939;
+}
+
+.unban-icon:hover {
+  color: #e8e6e3;
+  opacity: 0.5;
+}
+
+.artist-name {
+    display: inline-block;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+p {
+  font-size: 18px;
+}
+
+.view-on-spotify-div {
+  display: block;
+  margin: auto auto auto 0;
+  position: relative;
+  top: 30%;
+}
+
+.view-on-spotify-text {
+  font-size: 13px;
+}
+
+.spotify-logo {
+  clear: none;
+}
+
+@media only screen and (max-width: 730px) {
+  .view-on-spotify-div {
+    position: unset;
+    top: 0%;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .artist-div {
+    height: 110px;
+    min-height: 110px;
+    margin-bottom: 0.5vh;
+    width: 320px;
+  }
+
+  .artist-img {
+    width: 110px;
+    height: 110px;
+  }
+}

@@ -1,0 +1,83 @@
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fade-out {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes slide-right {
+  0% { transform: translate(-30px, 0px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+@keyframes slide-left {
+  0% { transform: translate(0px, 0px); }
+  100% { transform: translate(-30px, 0px); }
+}
+
+@keyframes slide-card-up-one-spot {
+  0% { transform: translate(0px, 0px) }
+  100% { transform: translate(0px, -120px) }
+}
+
+@keyframes slide-card-up-two-spots {
+  0% { transform: translate(0px, 0px) }
+  100% { transform: translate(0px, -240px) }
+}
+
+/* Used in select-seed-track for case when top card is selected and doesn't move */
+@keyframes dummyAnimation {
+  0% { transform: translate(0px, 0px) }
+  100% { transform: transalate(0px, 0px) }
+}
+
+
+.fade-in {
+  animation: fade-in 0.35s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.fade-out {
+  animation: fade-out 0.35s ease forwards;
+  animation-delay: 0.3s;
+}
+
+.slide-fade-in {
+  animation: fade-in 0.35s ease forwards, slide-right 0.35s ease forwards !important;
+  animation-delay: 0.3s;
+}
+
+.slide-fade-out {
+  animation: fade-out 0.35s ease forwards, slide-left 0.35s ease forwards !important;
+  animation-delay: 0.3s;
+}
+
+.slide-fade-out-no-delay {
+  animation: fade-out 0.35s ease forwards, slide-left 0.35s ease forwards !important;
+}
+
+.slide-card-up-one-spot {
+  animation: slide-card-up-one-spot 0.35s ease !important;
+  animation-delay: 0s;
+}
+
+.slide-card-up-two-spots {
+  animation: slide-card-up-two-spots 0.35s ease !important;
+  animation-delay: 0s;
+}
+
+.slide-card-up-two-spots-fade-in {
+  animation: slide-card-up-two-spots 0.35s ease forwards 0.35s, fade-in 0.35s ease forwards 0.35s !important;
+}
+
+/* 
+  Used in select-seed-track when top card (of three) is chosen
+  Since the first card doesn't move / doesn't have an animation when clicked,
+  a dummy animation is needed to trigger the animationend callback loading other UI elements
+*/
+.dummyAnimation {
+  animation: dummyAnimation 0.35s !important;
+}

@@ -1,0 +1,99 @@
+<div id="about">
+  <h2>About</h2>
+
+  <section>
+    <h3>How It Works</h3>
+
+    <p>Enter a song you like and we'll give you similar song recommendations to check out. <br />
+      Bookmark the ones you like then export them directly to your Spotify account. </p>
+
+    <p>We'll never show you the same song recommendation twice*, <br />
+     and you can click an artist name to ban their songs from being recommended.</p>
+
+    <p class="fineprint">(*Must be logged in to your TrackHunter account, it's free.)</p>
+  </section>
+
+  <section>
+    <h3>FAQ</h3>
+
+    <div class="faq-div">
+      <fa-icon 
+        id="expand-icon-1" 
+        class="expand-icon" 
+        [icon]="icons['icon1']" 
+        (click)="expandAnswer(1)">
+      </fa-icon>
+      <p id="question1" class="question">How did I get the same recommendation twice?</p>
+      <div id="answer-div-1" class="answer-div">
+        <p>
+          Sometimes a song appears on Spotify multiple times (on different albums / releases).
+          Our site considers them different songs because they have different Spotify track ID's.</p>
+        <p>
+          Recommendations might also repeat for unregistered users if the browser cache is cleared. 
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-div">
+      <fa-icon 
+        id="expand-icon-2" 
+        class="expand-icon" 
+        [icon]="icons['icon2']" 
+        (click)="expandAnswer(2)">
+      </fa-icon>
+      <p id="question2" class="question">Does banning artists affect the music style of my recommendations?</p>
+      <div id="answer-div-2" class="answer-div">
+        <p>
+          No. We just filter those artists out individually by their Spotify IDs.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-div">
+      <fa-icon 
+        id="expand-icon-3" 
+        class="expand-icon" 
+        [icon]="icons['icon3']" 
+        (click)="expandAnswer(3)">
+      </fa-icon>
+      <p id="question3" class="question">What was the site built with?</p>
+      <div id="answer-div-3" class="answer-div">
+        <ul>
+          <li>Angular</li>
+          <li>Node.Js</li>
+          <li>MongoDb</li>
+          <li>Express.Js</li>
+          <li>jQuery</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+
+  
+  <section>
+    <h3>Asset Credits</h3>
+
+    <p>
+      Icons
+      <fa-icon [icon]="bookmarkIcon"></fa-icon>
+      <fa-icon [icon]="banIcon"></fa-icon>
+      <fa-icon [icon]="expandIcon"></fa-icon>
+      <fa-icon [icon]="shrinkIcon"></fa-icon>
+      - <a href="https://fontawesome.com/icons" target="_blank">FontAwesome</a> by FortAwesome
+    </p>
+
+    <p>
+      Main Header Logo - 
+      <a href="https://thenounproject.com/icon/vinyl-record-player-4337083/">"Vinyl Record Player"</a>
+      by <a href="https://thenounproject.com/creator/heyrabbit/">Hey Rabbit</a>
+    </p>
+
+    <p>
+      Track Data & Recommendations -
+      <a href="https://developer.spotify.com/documentation/web-api">Spotify Web API</a>
+    </p>
+  </section>
+
+</div>
+

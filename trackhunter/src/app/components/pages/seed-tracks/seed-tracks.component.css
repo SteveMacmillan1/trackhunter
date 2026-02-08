@@ -1,0 +1,121 @@
+#select-seed-track {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.seed-card-container-div {
+  margin-top: 5vh;
+  width: 50%;
+}
+
+#search-div {
+  width: 100%;
+  margin: 5vh 0 0 0;
+  padding: 0;
+  text-align: center;
+  display: inline-block;
+  opacity: 0;
+}
+
+#search-div input {
+  width: 300px;
+}
+
+#search-field {
+  color: #e8e6e3;
+  background-color: #26292b;
+}
+
+#results-div {
+  width: 100%;
+}
+
+/* These cause problems intercepting clicks after the pivot animations,
+    so add pointer-events to smaller sub elements only */
+#popularity-div, #im-looking-for-div {
+  pointer-events: none;
+}
+
+#pop-slider-div, #submit-div {
+  pointer-events: auto;
+}
+
+#im-looking-for-div {
+  display: none;
+  margin-top: 15vh;
+}
+
+#popularity-div {
+  opacity: 0;
+  margin: 19vh auto 0 auto;
+}
+
+#pop-slider-div {
+  width: 60%;
+  min-width: 50%;
+  max-width: 60%;
+  margin: 0 auto;
+}
+
+#deep-tracks-text {
+  font-size: 13px;
+}
+
+#big-hits-text {
+  font-size: 13px;
+  float: right;
+}
+
+#submit-div {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 5%;
+  opacity: 0;
+}
+
+p.val-error {
+  text-align: left;
+}
+
+footer {
+  clear: left;
+}
+
+#search-field {
+  width: 250px;
+  height: 40px;
+  border-radius: 15px;
+  padding-right: 30px;
+  padding-left: 10px;
+  background-image: url('../../../../assets/img/search.png');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 20px 20px;
+  border: 1px solid #e8e6e37a;
+  position: relative;
+  left: 16px;
+  bottom: 16px;
+  font-size: 16px;
+}
+
+.slider {
+  display: block;
+  margin: 0 auto;
+  margin-top: 30px;
+  width: 90%;
+}
+
+#mag-glass-overlay {
+  display: inline-block;
+  width: 30px;
+  height: 41px;
+  position: relative;
+  right: 20px;
+  cursor: pointer;
+}
+
+#confirm {
+  margin: 0;
+}
