@@ -3,7 +3,7 @@ import { TrackService } from '../../../services/track.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, concatMap } from 'rxjs';
 import { faBookmark } from '@fortawesome/free-solid-svg-icons';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -59,11 +59,6 @@ export class BookmarkedTracksComponent {
     */
     this.permissionCode = this.route.snapshot.queryParams['code'] ?? '';
     this.permissionError = this.route.snapshot.queryParams['error'] ?? '';
-    if (this.permissionCode) {
-      // If success code received, upgrade the Spotify access token to include
-      // the user's granted permission
-      this.authSpotifyAcc(this.permissionCode).subscribe();
-    }
   }
 
 
@@ -84,23 +79,32 @@ export class BookmarkedTracksComponent {
 
 
   public exportTracksSubmit(): void {
-    const playlistName = this.exportForm.value.playlistName!;
-    this.trackService.exportTracks(playlistName).subscribe((resp) => {
-      if (resp.status == 200) {
-        /* 
-          Bookmarked tracks get deleted from user's TrackHunter account 
-          after they're exported to Spotify.
-          So reinitialize page to reflect its new data state
-        */
-        this.ngOnInit();
-        this.exportForm.get('playlistName')?.reset();
+    if (this.permissionCode) {
+        this.spinner.show();
+      /*
+        This forces authSpotifyAcc() to finish before starting exportTracks()
 
-        const p = document.getElementById('p-export-success') as HTMLElement;
-        p.style.visibility = 'visible';
-      } else {
-        console.log('There was a problem exporting tracks to Spotify account: ' + resp.status);
-      }
-    });
+        1) addPermissions(): User granted Trackhunter playlist-modify-private scope (done already)
+        2) authSpotifyAcc(): Upgrade access token to reflect the granted scope
+        3) exportTracks(): Creates empty playlist and loads tracks into it, then deletes them from db
+      */
+      this.authSpotifyAcc(this.permissionCode).pipe(
+      concatMap(() => {
+        const playlistName = this.exportForm.value.playlistName!;
+        return this.trackService.exportTracks(playlistName);
+      })
+      ).subscribe({
+        next: (resp) => {
+          this.ngOnInit();
+          this.exportForm.get('playlistName')?.reset();
+          const p = document.getElementById('p-export-success') as HTMLElement;
+          p.style.opacity = '0';
+          p.style.visibility = 'visible';
+          p.classList.add('fade-in');
+        },
+        error: (err) => console.error('Authorizing Trackhunter for Spotify acc access or exporting tracks to acc failed: ' + err.status)
+      });
+    }
   }
   
 

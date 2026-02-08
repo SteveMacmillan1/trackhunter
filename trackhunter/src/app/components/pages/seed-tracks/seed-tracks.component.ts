@@ -77,7 +77,6 @@ export class SeedTracksComponent {
           this.spinner.hide();
           this.loaded = true;
           this.tracks = resp.body.data.tracks.items;
-          console.log(this.tracks)
           spinnerDiv.style.display = 'none';
           searchDiv.style.display = 'none'; 
           // Hide searchDiv here so its fade-out animation fully plays earlier

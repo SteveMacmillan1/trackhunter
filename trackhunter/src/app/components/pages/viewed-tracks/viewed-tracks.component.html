@@ -16,7 +16,8 @@
   <div id="viewed-tracks-container" class="card-container">
     <app-bookmarked-track-card 
       *ngFor="let track of tracksChunk" 
-      [track]="track">
+      [track]="track"
+      [type]="'viewedTrack'">
     </app-bookmarked-track-card> 
   </div>
 </div>

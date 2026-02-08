@@ -58,7 +58,8 @@
   <ng-container class="card-container">
     <app-bookmarked-track-card 
       *ngFor="let track of bookmarkedTracks" 
-        [track]="track">
+        [track]="track"
+        [type]="'bookmarkedTrack'">
     </app-bookmarked-track-card> 
   </ng-container>
   <p id="p-export-success">Successfully exported to your Spotify account.</p>

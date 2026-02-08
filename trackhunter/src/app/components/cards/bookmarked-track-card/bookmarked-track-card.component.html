@@ -11,6 +11,7 @@
       <div>
         <p class="track-title">
           <fa-icon 
+            *ngIf="type !== 'viewedTrack'"
             [icon]="bookmarkIcon"
             [id]="'bookmark-icon-' + track.trackId" 
             class="bookmark-icon"

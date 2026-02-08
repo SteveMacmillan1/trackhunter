@@ -10,7 +10,8 @@ import { Track, EMPTY_TRACK } from '../../../models/models.track';
   styleUrl: './bookmarked-track-card.component.css'
 })
 export class BookmarkedTrackCardComponent {
-@Input() track: Track = EMPTY_TRACK;
+  @Input() track: Track = EMPTY_TRACK;
+  @Input() type: string;                  // Used to prevent bookmarkIcon from appearing
   truncTrackName: string;
   truncArtistName: string;
   // truncAlbumName: string;
