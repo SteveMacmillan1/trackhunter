@@ -30,7 +30,6 @@ export class RecommendedTrackCardComponent {
 
 
   ngOnInit() {
-    console.log(this.track)
     // Truncates song titles 'gracefully' i.e. doesn't split words
     this.truncTrackName = this.trackService.trimTrackField(this.track?.trackName, 70);
     this.truncArtistName = this.trackService.trimTrackField(this.track?.artistName, 38);
@@ -66,8 +65,6 @@ export class RecommendedTrackCardComponent {
 
 
   public hoverArtistName(): void {
-    // Show ban icon beside artist name at 35% transparency 
-    // But only if user is logged in, only supported while logged in
     const id = this.track.trackId;
     const artistName = document.getElementById('artist-name-' + id);
     if (this.isLoggedIn()) {
@@ -84,7 +81,7 @@ export class RecommendedTrackCardComponent {
 
   public unhoverArtistName(): void {
     const id = this.track.trackId;
-    const artistName = <HTMLElement | null>document.getElementById('artist-name-' + id);
+    const artistName = <HTMLElement | null> document.getElementById('artist-name-' + id);
 
     if (this.isLoggedIn()) {
       if (this.isBanned()) {
@@ -99,29 +96,19 @@ export class RecommendedTrackCardComponent {
 
 
   public hoverBookmarkIcon(): void {
-    const id = this.track.trackId;
-    const bookmarkIcon = <HTMLElement | null>document.getElementById('bookmark-icon-' + id) as HTMLElement;
-    bookmarkIcon.style.opacity = '0.8';
-    this.bookmarkIcon = (this.isBookmarked()) ? faBookmark : faBookmarkSaved;
-
-    /*
-      Prevent hover from 'overriding' & showing the wrong icon after user clicks it
-      i.e. unbookmarked track: 
-        icon starts unfilled, user hovers in, becomes filled, user clicks it,
-        icon should stay filled, but it won't without this
-    */
-    if (this.isBookmarkIconClicked()) {
-      this.bookmarkIcon = (this.isBookmarked()) ? faBookmarkSaved : faBookmark;
-      bookmarkIcon.style.color = '#e8e6e3';
-      bookmarkIcon.style.opacity = '1';
+    if (!this.isBookmarkIconClicked()) {
+      const id = this.track.trackId;
+      const bookmarkIcon = <HTMLElement | null> document.getElementById('bookmark-icon-' + id);
+      this.bookmarkIcon = faBookmarkSaved;
+      bookmarkIcon?.style.setProperty('opacity', '0.7');
     }
   }
 
 
   public unhoverBookmarkIcon(): void {
       const id = this.track.trackId;
-      const bookmarkIcon = <HTMLElement | null>document.getElementById('bookmark-icon-' + id) as HTMLElement;
-      bookmarkIcon.style.opacity = '1';
+      const bookmarkIcon = <HTMLElement | null> document.getElementById('bookmark-icon-' + id);
+      bookmarkIcon?.style.setProperty('opacity', '1');
       this.bookmarkIcon = (this.isBookmarked()) ? faBookmarkSaved : faBookmark;
       this.bookmarkIconClicked = false;
   }
@@ -136,11 +123,11 @@ export class RecommendedTrackCardComponent {
       this.bookmarked = !this.bookmarked;
       this.bookmarkIconClicked = !this.bookmarkIconClicked;
       var id = this.track.trackId;
-      var icon = document.getElementById('bookmark-icon-' + id);
-      this.bookmarkIcon = (this.isBookmarked()) ? faBookmarkSaved : faBookmark;
       let tooltip = (this.isBookmarked()) ? 'Remove from Bookmarked List' : 'Add to Bookmarked List';
+      const icon = <HTMLElement | null> document.getElementById('bookmark-icon-' + id);
       icon?.setAttribute('title', tooltip);
-      this.unhoverBookmarkIcon();
+      icon?.style.setProperty('opacity', '1');
+      this.bookmarkIcon = (this.isBookmarked()) ? faBookmarkSaved : faBookmark;
 
       this.trackService.addRemoveBookmark(this.track.artistId, this.track.trackId).subscribe({
         next: (resp) => {
