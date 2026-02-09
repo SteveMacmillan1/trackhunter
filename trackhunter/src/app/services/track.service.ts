@@ -113,6 +113,11 @@ export class TrackService {
   }
 
 
+  public isBookmarked(trackId: string): Observable<any> {
+    return this.https.get<any>(this.getSiteUrl() + '/is-bookmarked?trackId=' + trackId);
+  }
+
+
   public exportTracks(playlistName: string): Observable<any> {
     const body = { playlistName: playlistName }
     return this.https.post<any>(this.getSiteUrl() + '/export-bookmarked-tracks', body, 

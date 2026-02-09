@@ -1,4 +1,4 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, AfterViewInit } from '@angular/core';
 import { faBookmark } from '@fortawesome/free-regular-svg-icons';
 import { faBookmark as faBookmarkSaved } from '@fortawesome/free-solid-svg-icons';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
@@ -34,6 +34,22 @@ export class RecommendedTrackCardComponent {
     this.truncTrackName = this.trackService.trimTrackField(this.track?.trackName, 70);
     this.truncArtistName = this.trackService.trimTrackField(this.track?.artistName, 38);
     // this.truncAlbumName = this.trackService.trimTrackField(this.track.albumName, 38);
+  }
+
+  ngAfterViewInit() {
+    this.trackService.isBookmarked(this.track.trackId).subscribe({
+      next: (resp) => {
+        if (resp.isBookmarked) {
+          this.bookmarked = true;
+          const icon = <HTMLElement | null> document.getElementById('bookmark-icon-' + this.track.trackId);
+          icon?.setAttribute('title', 'Remove from Bookmarked List');
+          this.bookmarkIcon = faBookmarkSaved;
+        }
+      },
+      error: (err) => {
+        console.log('Error checking if track is bookmarked in db: ' + err.status);
+      }
+    });
   }
 
 
