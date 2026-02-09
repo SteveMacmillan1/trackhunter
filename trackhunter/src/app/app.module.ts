@@ -48,7 +48,7 @@ const appRoutes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'logged-out', component: LoggedOutComponent}
+  {path: 'logout', component: LoggedOutComponent}
 ];
 
 interface NgxSpinnerConfig {

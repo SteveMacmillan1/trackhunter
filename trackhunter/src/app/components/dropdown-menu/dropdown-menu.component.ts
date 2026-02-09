@@ -17,7 +17,7 @@ export class DropdownMenuComponent {
       console.log(resp)
       if (resp.status == 200) {
         sessionStorage.clear();
-        window.location.replace('/logged-out'); 
+        window.location.replace('/logout'); 
       } else {
         console.log('There was a problem logging out: ' + resp.status);
       }
