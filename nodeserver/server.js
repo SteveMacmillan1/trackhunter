@@ -14,11 +14,10 @@ const path = require('path');
 const siteUrl = 'https://127.0.0.1';
 // const siteUrl = 'https://trackhunter-2fde545b2aef.herokuapp.com';
 const options = {
-  key: fs.readFileSync('crt/localhost.key'),
-  cert: fs.readFileSync('crt/localhost.crt')
+  key: fs.readFileSync('crt/localhost-key.pem'),
+  cert: fs.readFileSync('crt/localhost.pem')
 };
 require('dotenv').config()
-const encryption_secret = fs.readFileSync('encryption-secret.txt').toString();
 
   
 const MongoDBStore = require('connect-mongo');
@@ -94,7 +93,7 @@ http.createServer((req, res) => {
 app.post('/add-remove-ban', async (req, res) => {
   if (!req.session.userId)
     return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
-  
+
   const userId = req.session.userId;
   const artistId = req.body.artistId;
   try {
