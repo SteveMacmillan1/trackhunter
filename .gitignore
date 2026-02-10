@@ -3,6 +3,7 @@ nodeserver/.env
 nodeserver/oldrecommendations.json
 nodeserver/node_modules
 nodeserver/crt
+nodeserver/spotifinder
 trackhunter/node_modules
 trackhunter/.angular
 trackhunter/.vscode
