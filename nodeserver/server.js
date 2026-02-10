@@ -92,36 +92,36 @@ http.createServer((req, res) => {
 
 
 app.post('/add-remove-ban', async (req, res) => {
-  if (req.session.userId) {
-    const userId = req.session.userId;
-    const artistId = req.body.artistId;
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
+  
+  const userId = req.session.userId;
+  const artistId = req.body.artistId;
+  try {
+    await users_db.addRemoveBan(userId, artistId);
+    res.status(201).json({ status: 'Success', message: 'Created' });
 
-    try {
-      await users_db.addRemoveBan(userId, artistId);
-      res.status(201).json({ status: 'Success', message: 'Created' });
-
-    } catch (e) {
-      console.log(e.name + ' in /add-remove-ban: ' + e.message);
-      res.status(500).json({ status: 'Fail', message: 'Database error'});
-    }
+  } catch (e) {
+    console.log(e.name + ' in /add-remove-ban: ' + e.message);
+    res.status(500).json({ status: 'Fail', message: 'Database error'});
   }
 });
 
 
 app.post('/add-remove-bookmark', async (req, res) => {
-  if (req.session.userId) {
-    const userId = req.session.userId;
-    const artistId = req.body.artistId;
-    const trackId = req.body.trackId;
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-    try {
-      await users_db.addRemoveBookmark(userId, artistId, trackId);
-      res.status(201).json({ status: 'Success', message: 'Created' } );
+  const userId = req.session.userId;
+  const artistId = req.body.artistId;
+  const trackId = req.body.trackId;
+  try {
+    await users_db.addRemoveBookmark(userId, artistId, trackId);
+    res.status(201).json({ status: 'Success', message: 'Created' } );
 
-    } catch (e) {
-      console.log(e.name + ' in /add-remove-bookmark: ' + e.message);
-      res.status(500).json({ status: 'Fail', message: 'Database error' });
-    }
+  } catch (e) {
+    console.log(e.name + ' in /add-remove-bookmark: ' + e.message);
+    res.status(500).json({ status: 'Fail', message: 'Database error' });
   }
 });
 
@@ -173,7 +173,6 @@ app.post('/process-register', async (req, res) => {
       if (!user) {
         // If email not registered, create (and return) new user
         user = await users_db.addUser(userEmail, userPassword);
-        console.log(user)
         req.session.authenticated = true;
         req.session.userEmail = userEmail;
         req.session.userId = user._id.toString();
@@ -309,156 +308,184 @@ app.post('/get-result-tracks', async (req, res) => {
   });
 
 
-app.get('/get-bookmarked-tracks', async (req, res) => {
-  if (req.session.userId) {
-    try {
-      const data = await users_db.getBookmarkedTracks(req.session.userId);
-      res.status(200).json({
-        status: "Success",
-        message: "Bookmarked tracks successfully retrieved",
-        data: data
-      });
+app.get('/is-bookmarked', async (req, res) => {
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-    } catch (e) {
-      console.log(e.name + ' in /get-bookmarked-tracks: ' + e.message);
-      return res.status(500).json({ status: 'Fail', message: 'Database error' });
-    }
+  const userId = req.session.userId;
+  const trackId = req.query.trackId;
+  try {
+    const isBookmarked = await users_db.isBookmarked(userId, trackId);
+    res.status(200).json({ 
+      status: 'Success',
+      isBookmarked: isBookmarked,
+      message: 'Bookmarked state successfully retrieved' 
+  });
+
+  } catch (e) {
+    console.log(e.name + ' in /add-remove-bookmark: ' + e.message);
+    res.status(500).json({ status: 'Fail', message: 'Database error' });
+  }
+
+});
+
+
+app.get('/get-bookmarked-tracks', async (req, res) => {
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
+
+  try {
+    const data = await users_db.getBookmarkedTracks(req.session.userId);
+    res.status(200).json({
+      status: "Success",
+      message: "Bookmarked tracks successfully retrieved",
+      data: data
+    });
+
+  } catch (e) {
+    console.log(e.name + ' in /get-bookmarked-tracks: ' + e.message);
+    return res.status(500).json({ status: 'Fail', message: 'Database error' });
   }
 });
 
 
 app.get('/get-viewed-tracks', async (req, res) => {
-  if (req.session.userId) {
-    try {
-      const data = await users_db.getViewedTracks(req.session.userId);
-      res.status(200).json({
-        status: "Success",
-        message: "Viewed tracks successfully retrieved",
-        data: data
-      });
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-    } catch (e) {
-      console.log(e.name + ' in /get-viewed-tracks: ' + e.message);
-      return res.status(500).json({ status: 'Fail', message: 'Database error' });
-    }
+  try {
+    const data = await users_db.getViewedTracks(req.session.userId);
+    res.status(200).json({
+      status: "Success",
+      message: "Viewed tracks successfully retrieved",
+      data: data
+    });
+
+  } catch (e) {
+    console.log(e.name + ' in /get-viewed-tracks: ' + e.message);
+    return res.status(500).json({ status: 'Fail', message: 'Database error' });
   }
 });
 
 
 app.get('/get-banned-artists', async (req, res) => {
-  if (req.session.userId) {
-    try {
-      const data = await users_db.getBannedArtists(req.session.userId);
-      res.status(200).json({
-        status: "Success",
-        message: "Banned artists successfully retrieved",
-        data: data 
-      });
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-    } catch (e) {
-      console.log(e.name + ' in /get-banned-artists: ' + e.message);
-      return res.status(500).json({ status: 'Fail', message: 'Database error' });
-    }
+  try {
+    const data = await users_db.getBannedArtists(req.session.userId);
+    res.status(200).json({
+      status: "Success",
+      message: "Banned artists successfully retrieved",
+      data: data 
+    });
+
+  } catch (e) {
+    console.log(e.name + ' in /get-banned-artists: ' + e.message);
+    return res.status(500).json({ status: 'Fail', message: 'Database error' });
   }
 });
 
 
 app.post('/reset-viewed-tracks', async (req, res) => {
-  if (req.session.userId) {
-    try {
-      await users_db.resetViewedTracks(req.session.userEmail);
-      res.status(204).json({
-        status: "Success",
-        message: "Viewed tracks successfully reset"
-      });
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-    } catch (e) {
-      console.log(e.name + ' in /reset-viewed-tracks: ' + e.message);
-      return res.status(500).json({ status: 'Fail', message: 'Server error' });
-    }
+  try {
+    await users_db.resetViewedTracks(req.session.userEmail);
+    res.status(204).json({
+      status: "Success",
+      message: "Viewed tracks successfully reset"
+    });
+
+  } catch (e) {
+    console.log(e.name + ' in /reset-viewed-tracks: ' + e.message);
+    return res.status(500).json({ status: 'Fail', message: 'Server error' });
   }
 });
 
 
 app.post('/export-bookmarked-tracks', async(req, res) => {
-  if (req.session.userId) {
-    // Create new playlist with playlist name user typed, if available
-    var playlistName = req.body.playlistName;
-    const spotifyUserId = req.session.spotifyUserId;
-    const accessToken = req.session.accessToken;
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-    try {
-      if (playlistName == '')
-        // Use a default playlist name if not available
-        // playlistName = 'TrackHunter ' + Date.now().toString().split(' GMT')[0];
-        playlistName = 'TrackHunter Export';
-      const playlist = await (await spotify.createPlaylist(spotifyUserId, playlistName, accessToken)).json();
-      console.log('Playlist created? ' + playlist.id);
+  // Create new playlist with playlist name user typed, if available
+  var playlistName = req.body.playlistName;
+  const spotifyUserId = req.session.spotifyUserId;
+  const accessToken = req.session.accessToken;
 
-      // Retreive bookmarkedTrackId's, convert to spotify URIs, add them to new array
-      var spotifyUris = { uris: [] };
-      const bookmarkedTracks = await users_db.getBookmarkedTracks(req.session.userId);
-      for (track of bookmarkedTracks) {
-          spotifyUris.uris.push('spotify:track:' + track.trackId);
-      }
+  try {
+    if (playlistName == '')
+      // Use a default playlist name if not available
+      // playlistName = 'TrackHunter ' + Date.now().toString().split(' GMT')[0];
+      playlistName = 'TrackHunter Export';
+    const playlist = await (await spotify.createPlaylist(spotifyUserId, playlistName, accessToken)).json();
 
-      // Add tracks to Spotify playlist
-      await spotify.addToPlaylist(playlist.id, spotifyUris, accessToken);
-
-      // Delete tracks from user's bookmarks (as they're now exported to Spotify)
-      var user = await User.findOne({_id: req.session.userId});
-      user.bookmarkList = [];
-      user.save();
-
-      res.status(200).json({
-        status: "Success",
-        message: "Successfully exported tracks to Spotify playlist",
-        playlistId: playlist.id
-      });
-
-    } catch (e) {
-      console.log(e.name + ' in \export-bookmarked-tracks: ' + e.message);
-      return res.status(500).json({ status: 'Fail', message: 'Server or Database Error' });
+    // Retreive bookmarkedTrackId's, convert to spotify URIs, add them to new array
+    var spotifyUris = { uris: [] };
+    const bookmarkedTracks = await users_db.getBookmarkedTracks(req.session.userId);
+    for (track of bookmarkedTracks) {
+        spotifyUris.uris.push('spotify:track:' + track.trackId);
     }
+
+    // Add tracks to Spotify playlist
+    await spotify.addToPlaylist(playlist.id, spotifyUris, accessToken);
+
+    // Delete tracks from user's bookmarks (as they're now exported to Spotify)
+    var user = await User.findOne({_id: req.session.userId});
+    user.bookmarkList = [];
+    user.save();
+
+    res.status(200).json({
+      status: "Success",
+      message: "Successfully exported tracks to Spotify playlist",
+      playlistId: playlist.id
+    });
+
+  } catch (e) {
+    console.log(e.name + ' in \export-bookmarked-tracks: ' + e.message);
+    return res.status(500).json({ status: 'Fail', message: 'Server or Database Error' });
   }
 });
 
 
 app.get('/get-spotify-permissions', async(req, res) => {    
-  if (req.session.userId) {
-    res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + siteUrl + '/bookmarked-tracks');
-  }
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
+
+  res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + siteUrl + '/bookmarked-tracks');
 });
 
 
 app.post('/auth-spotify-acc', async (req, res) => {
-  if (req.session.userId) {
-    try {
-      var spotifyResp;
-      // Any route that could access Spotify API must first check if access token valid
-      if (helpers.isAccessTokenInvalid(req.session.timeIssuedMs)) {
-          spotifyResp = await spotify.getAccessToken();
-          req.session.accessToken = spotifyResp.access_token;
-          req.session.timeIssuedMs = Date.now();
-      }
+  if (!req.session.userId)
+    return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-      // Upgraded access token confirms user granted TrackHunter app permissions to their acc
-      spotifyResp = await spotify.upgradeAccessToken(req.body.permissionCode);
-      req.session.accessToken = spotifyResp.access_token;
-      req.session.timeIssuedMs = Date.now();
-
-      // We can now freely access their account's Spotify id
-      var user = await spotify.getCurrentSpotifyUserId(req.session.accessToken);
-
-      // Save it to session
-      req.session.spotifyUserId = user.id;
-      res.status(200).json({ status: "Success", message: "App authourized to Spotify account" });
-
-    } catch (e) {
-      console.log(e.name + ' in \auth-spotify-acc: ' + e.message);
-      return res.status(500).json({ status: 'Fail', message: 'Server or Spotify API Error' });
+  try {
+    var spotifyResp;
+    // Any route that could access Spotify API must first check if access token valid
+    if (helpers.isAccessTokenInvalid(req.session.timeIssuedMs)) {
+        spotifyResp = await spotify.getAccessToken();
+        req.session.accessToken = spotifyResp.access_token;
+        req.session.timeIssuedMs = Date.now();
     }
-  };
+
+    // Upgraded access token confirms user granted TrackHunter app permissions to their acc
+    spotifyResp = await spotify.upgradeAccessToken(req.body.permissionCode);
+    req.session.accessToken = spotifyResp.access_token;
+    req.session.timeIssuedMs = Date.now();
+
+    // We can now freely access their account's Spotify id
+    var user = await spotify.getCurrentSpotifyUserId(req.session.accessToken);
+
+    // Save it to session
+    req.session.spotifyUserId = user.id;
+    res.status(200).json({ status: "Success", message: "App authourized to Spotify account" });
+
+  } catch (e) {
+    console.log(e.name + ' in \auth-spotify-acc: ' + e.message);
+    return res.status(500).json({ status: 'Fail', message: 'Server or Spotify API Error' });
+  }
 });
 
 

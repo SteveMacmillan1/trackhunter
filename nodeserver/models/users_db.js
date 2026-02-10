@@ -1,6 +1,31 @@
 const User = require('./interfaces/users.js');
 const Artist = require('./interfaces/artists.js');
 
+/*
+    Project not originally intended to support checking if track isBookmarked
+    Tracks that had been already viewed were filtered from appearing again
+        Only a track that had been viewed could be bookmarked...
+        Hence there was no chance an unviewed track could be bookmarked
+        Therefore there was no need to check db for bookmarked state
+    However now that spotify api /recommendations are deprecated, the same 46 canned recommendations are looped
+    So now there -is- a chance a previously seen recommended track could already be bookmarked
+*/
+async function isBookmarked(userId, trackId) {
+    // Retrieve logged in user's bookmarks from db
+    const user = await User.findOne({ _id: userId });
+    if (!user)
+        throw new Error('Could not find user in db (or db connectivity issue)');
+
+    var userBookmarks = user.bookmarkList;
+    for (let i=0; i < userBookmarks.length; i++) {
+        // Check all their bookmarks to see if the track is in there already
+        if (userBookmarks[i].trackId == trackId) {
+            // Stop and return since track was found
+            return true;
+        }
+    }
+    return false;
+}
 
 async function addRemoveBookmark(userId, artistId, trackId) {
     // Retrieve logged in user's bookmarks from db
@@ -274,6 +299,7 @@ async function resetViewedTracks(userEmail) {
 
 
 module.exports = {
+    isBookmarked,
     addRemoveBookmark,
     addRemoveBan,
     addUser,
