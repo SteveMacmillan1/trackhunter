@@ -46,8 +46,10 @@ export class RegisterComponent {
 
     } else {
       const userEmail = this.registerForm.value.userEmail?.toLowerCase();
-      const hashedPassword = SHA1(this.registerForm.value.userPassword!);
-      this.accountService.processRegister(userEmail, hashedPassword).subscribe({
+      const userPassword = this.registerForm.value.userPassword!;
+      // Don't encrypt password before sending to server
+      // Rely on SSL/TLS delivery
+      this.accountService.processRegister(userEmail, userPassword).subscribe({
         next: (resp) => {
           sessionStorage.setItem('userEmail', resp.body.userEmail);
           sessionStorage.setItem('userId', resp.body.userId);
@@ -56,6 +58,8 @@ export class RegisterComponent {
         error: (err) => {
         if (err.status === 409)
           this.valMsg = '*Email already registered';
+        else if (err.status === 400)
+          this.valMsg = '*Bad request: invalid email or password format';
         else 
           this.valMsg = '*There was a problem registering: ' + err.status;
         }

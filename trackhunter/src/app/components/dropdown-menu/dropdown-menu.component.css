@@ -65,6 +65,6 @@
   list-style-type: none;
 }
 
-.nav-menu li {
+.navbar a {
   cursor: pointer;
 }
