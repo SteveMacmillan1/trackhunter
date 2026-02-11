@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
@@ -9,15 +10,15 @@ import { AccountService } from 'src/app/services/account.service';
 export class DropdownMenuComponent {
 
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService, private router: Router) {}
 
 
   public onLogout(): void {
     this.accountService.logout().subscribe((resp) => {
-      console.log(resp)
       if (resp.status == 200) {
-        sessionStorage.clear();
-        window.location.replace('/logout'); 
+        this.router.navigate(['/logout']).then(() => {
+          sessionStorage.clear()
+        });
       } else {
         console.log('There was a problem logging out: ' + resp.status);
       }
