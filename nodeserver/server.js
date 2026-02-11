@@ -98,11 +98,11 @@ app.post('/add-remove-ban', async (req, res) => {
   const artistId = req.body.artistId;
   try {
     await users_db.addRemoveBan(userId, artistId);
-    res.status(201).json({ status: 'Success', message: 'Created' });
+    return res.status(201).json({ status: 'Success', message: 'Created' });
 
   } catch (e) {
     console.log(e.name + ' in /add-remove-ban: ' + e.message);
-    res.status(500).json({ status: 'Fail', message: 'Database error'});
+    return res.status(500).json({ status: 'Fail', message: 'Database error'});
   }
 });
 
@@ -116,11 +116,11 @@ app.post('/add-remove-bookmark', async (req, res) => {
   const trackId = req.body.trackId;
   try {
     await users_db.addRemoveBookmark(userId, artistId, trackId);
-    res.status(201).json({ status: 'Success', message: 'Created' } );
+    return res.status(201).json({ status: 'Success', message: 'Created' } );
 
   } catch (e) {
     console.log(e.name + ' in /add-remove-bookmark: ' + e.message);
-    res.status(500).json({ status: 'Fail', message: 'Database error' });
+    return res.status(500).json({ status: 'Fail', message: 'Database error' });
   }
 });
 
@@ -146,7 +146,7 @@ app.post('/process-login', async (req, res) => {
         req.session.authenticated = true;
         req.session.userEmail = userEmail;
         req.session.userId = userResult._id.toString();
-        res.status(200).json({
+        return res.status(200).json({
           message: "Login successful",
           status: "Success",
           userEmail: userEmail, 
@@ -154,28 +154,36 @@ app.post('/process-login', async (req, res) => {
         });
     } else if (!emailResult) {
         // Login failed, email doesn't exist
-        res.status(404).json({ status: "Fail", message: "Email not registered" });
+        return res.status(404).json({ status: "Fail", message: "Email not registered" });
     } else {
         // Login failed, wrong password
-        res.status(401).json({ status: "Fail", message: "Unauthorized" });
+        return res.status(401).json({ status: "Fail", message: "Unauthorized" });
     }
 });
 
 
 app.post('/process-register', async (req, res) => {
     const userEmail = req.body.userEmail;
-    const userPassword = crypto.SHA1(req.body.userPassword);
+    const userPassword = req.body.userPassword;
+
+    // Someone could technically POST a direct registration or manipulate the frontend 
+    // to bypass validations, so check them again and reject as bad requests if they fail
+    if (!helpers.emailVal(userEmail))
+      return res.status(400).json({ status: "Fail", message: "Invalid Email Format" })
+    if (!helpers.passwordVal(userPassword))
+      return res.status(400).json({ status: "Fail", message: "Invalid Password Format" })
+
     // Check if email is already registered
     try {
       var user = await users_db.getUserByEmail(userEmail);
-      console.log(user)
       if (!user) {
         // If email not registered, create (and return) new user
-        user = await users_db.addUser(userEmail, userPassword);
+        // Encrypt password for db storage
+        user = await users_db.addUser(userEmail, crypto.SHA1(userPassword));
         req.session.authenticated = true;
         req.session.userEmail = userEmail;
         req.session.userId = user._id.toString();
-        res.status(201).json({
+        return res.status(201).json({
           status: "Success",
           message: "New user created", 
           userEmail: userEmail, 
@@ -183,7 +191,7 @@ app.post('/process-register', async (req, res) => {
         });
       } else {
           // If email already registered, send error
-          res.status(409).json({ status: "Fail", message: "Email already exists" });
+          return res.status(409).json({ status: "Fail", message: "Email already exists" });
       }
 
     } catch (e) {
@@ -335,7 +343,7 @@ app.get('/get-bookmarked-tracks', async (req, res) => {
 
   try {
     const data = await users_db.getBookmarkedTracks(req.session.userId);
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Bookmarked tracks successfully retrieved",
       data: data
@@ -354,7 +362,7 @@ app.get('/get-viewed-tracks', async (req, res) => {
 
   try {
     const data = await users_db.getViewedTracks(req.session.userId);
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Viewed tracks successfully retrieved",
       data: data
@@ -373,7 +381,7 @@ app.get('/get-banned-artists', async (req, res) => {
 
   try {
     const data = await users_db.getBannedArtists(req.session.userId);
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Banned artists successfully retrieved",
       data: data 
@@ -392,7 +400,7 @@ app.post('/reset-viewed-tracks', async (req, res) => {
 
   try {
     await users_db.resetViewedTracks(req.session.userEmail);
-    res.status(204).json({
+    return res.status(204).json({
       status: "Success",
       message: "Viewed tracks successfully reset"
     });
@@ -435,7 +443,7 @@ app.post('/export-bookmarked-tracks', async(req, res) => {
     user.bookmarkList = [];
     user.save();
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "Success",
       message: "Successfully exported tracks to Spotify playlist",
       playlistId: playlist.id
@@ -452,7 +460,7 @@ app.get('/get-spotify-permissions', async(req, res) => {
   if (!req.session.userId)
     return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-  res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + siteUrl + '/bookmarked-tracks');
+  return res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + siteUrl + '/bookmarked-tracks');
 });
 
 
@@ -479,7 +487,7 @@ app.post('/auth-spotify-acc', async (req, res) => {
 
     // Save it to session
     req.session.spotifyUserId = user.id;
-    res.status(200).json({ status: "Success", message: "App authourized to Spotify account" });
+    return res.status(200).json({ status: "Success", message: "App authourized to Spotify account" });
 
   } catch (e) {
     console.log(e.name + ' in \auth-spotify-acc: ' + e.message);
