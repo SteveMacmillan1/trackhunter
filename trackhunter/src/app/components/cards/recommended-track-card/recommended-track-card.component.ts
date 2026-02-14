@@ -137,7 +137,7 @@ export class RecommendedTrackCardComponent {
   public bookmarkTrack(): void {
     if (this.isLoggedIn()) {
       this.bookmarked = !this.bookmarked;
-      this.bookmarkIconClicked = !this.bookmarkIconClicked;
+      this.bookmarkIconClicked = true;
       var id = this.track.trackId;
       let tooltip = (this.isBookmarked()) ? 'Remove from Bookmarked List' : 'Add to Bookmarked List';
       const icon = <HTMLElement | null> document.getElementById('bookmark-icon-' + id);
