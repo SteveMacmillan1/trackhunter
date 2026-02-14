@@ -28,6 +28,7 @@ export class ViewedTracksComponent {
       if (resp.status == 200) {
         this.spinner.hide();
         this.viewedTracks = resp.body.data;
+        console.log(this.viewedTracks)
         // Sort it in reverse chronological order (see below)
         this.viewedTracks.sort(function(a,b) {return b.date - a.date})
         // Add up to 20 viewed tracks on initial page load (see below)
@@ -68,5 +69,16 @@ export class ViewedTracksComponent {
       this.tracksChunk.push(track);
 
     this.histIndex += 20;
+  }
+
+  public resetViewedTracks(): void {
+    this.trackService.resetViewedTracks().subscribe({
+      next: (resp) => {
+        location.reload();
+      },
+      error: (err) => {
+        console.log('There was a problem resetting viewed tracks: ' + err.status);
+      }
+    });
   }
 }

@@ -102,7 +102,13 @@
   <br />
   <p>No more recommendations!</p>
   <br />
-  <p id="p-reset-tracks" *ngIf="isLoggedIn()"><a (click)="resetViewedTracks()">Reset</a> viewed tracks.</p>
+  <button 
+    id="reset-viewed-btn"
+    class="green-btn"
+    *ngIf="isLoggedIn()"
+    (click)="resetViewedTracks()">
+    Reset Viewed Tracks
+  </button>
   <p *ngIf="!isLoggedIn()">To start over, please clear temporary data from your browser's settings (or <a [routerLink]="'/register'">create an account</a>).</p>
   <br />
   <p>Return to <a [routerLink]="'/'">search</a></p>

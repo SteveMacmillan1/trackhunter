@@ -60,12 +60,13 @@ export class ResultTracksComponent {
 
 
   public resetViewedTracks(): void {
-    this.trackService.resetViewedTracks().subscribe((resp) => {
-      if (resp.status == 204) {
-        const p = document.getElementById('p-reset-tracks') as HTMLElement;
-        p.innerHTML = 'Viewed tracks reset!'
-      } else {
-        console.log('There was a problem resetting viewed tracks: ' + resp.status);
+    this.trackService.resetViewedTracks().subscribe({
+      next: (resp) => {
+        const btn = document.getElementById('reset-viewed-btn') as HTMLElement;
+        btn.innerHTML = 'Viewed tracks reset!';
+      },
+      error: (err) => {
+        console.log('There was a problem resetting viewed tracks: ' + err.status);
       }
     });
   }
