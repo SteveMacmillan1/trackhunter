@@ -18,7 +18,12 @@ export class AboutComponent {
   icons: { [key: string]: IconDefinition } = {
     icon1: this.expandIcon,
     icon2: this.expandIcon,
-    icon3: this.expandIcon
+    icon3: this.expandIcon,
+    icon4: this.expandIcon,
+    icon5: this.expandIcon,
+    icon6: this.expandIcon,
+    icon7: this.expandIcon,
+    icon8: this.expandIcon
   }
   
 

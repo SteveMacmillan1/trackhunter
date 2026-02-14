@@ -63,6 +63,18 @@ hr {
   margin: 0;
 }
 
+.italic {
+  font-style: italic;
+}
+
+.underlined {
+  text-decoration: underline;
+}
+
+.bold {
+  font-weight: 600;
+}
+
 .val-error {
   color: #fa3939;
   font-size: 12px;

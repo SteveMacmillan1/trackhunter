@@ -1,99 +1,179 @@
-<div id="about">
+<section id="about">
   <h2>About</h2>
+    <h3>TrackHunter: Music Discovery Website</h3>
+    <div>
+      <p>Listen to song recommendations generated from a selected seed track. Export your new finds to directly
+         to your Spotify account.</p>
+    </div>
+    <div>
+      <p>Steve Macmillan <a target="_blank" href="https://www.stevemacmillan.com">www.stevemacmillan.com</a></p>
+      <p>Date published: TBA</p>
+      <p>Angular, Node.js, Express, MongoDB</p>
+    </div>
+</section>
 
+
+<section id="faq">
+  <h2>FAQ</h2>
   <section>
-    <h3>How It Works</h3>
+    <h3>General</h3>
 
-    <p>Enter a song you like and we'll give you similar song recommendations to check out. <br />
-      Bookmark the ones you like then export them directly to your Spotify account. </p>
-
-    <p>We'll never show you the same song recommendation twice*, <br />
-     and you can click an artist name to ban their songs from being recommended.</p>
-
-    <p class="fineprint">(*Must be logged in to your TrackHunter account, it's free.)</p>
-  </section>
-
-  <section>
-    <h3>FAQ</h3>
-
-    <div class="faq-div">
+    <div class="faq-item">
       <fa-icon 
         id="expand-icon-1" 
         class="expand-icon" 
         [icon]="icons['icon1']" 
         (click)="expandAnswer(1)">
       </fa-icon>
-      <p id="question1" class="question">How did I get the same recommendation twice?</p>
+      <p id="question1" class="question">How does TrackHunter work?</p>
       <div id="answer-div-1" class="answer-div">
-        <p>
-          Sometimes a song appears on Spotify multiple times (on different albums / releases).
-          Our site considers them different songs because they have different Spotify track ID's.</p>
-        <p>
-          Recommendations might also repeat for unregistered users if the browser cache is cleared. 
-        </p>
+        <p>Start with a song you like and we'll give you similar song recommendations to check out.
+        We'll never show you the same recommendation twice, and you can ban artists from
+        appearing in your recommendations feed. Bookmark songs that you like as you go, then 
+        <span class="underlined">export them directly to your Spotify account!</span></p>
       </div>
     </div>
 
-    <div class="faq-div">
+    <div class="faq-item">
       <fa-icon 
         id="expand-icon-2" 
         class="expand-icon" 
         [icon]="icons['icon2']" 
         (click)="expandAnswer(2)">
       </fa-icon>
-      <p id="question2" class="question">Does banning artists affect the music style of my recommendations?</p>
+      <p id="question2" class="question">Who is it intended for?</p>
       <div id="answer-div-2" class="answer-div">
-        <p>
-          No. We just filter those artists out individually by their Spotify IDs.
-        </p>
+        <p>Our primary goal is to help serious music curators find deep tracks with the genres and characteristics they want.
+        But we also have search options to help users discover the bigger hits in genres they're still new to.</p>
       </div>
     </div>
 
-    <div class="faq-div">
+    <div class="faq-item">
       <fa-icon 
         id="expand-icon-3" 
         class="expand-icon" 
         [icon]="icons['icon3']" 
         (click)="expandAnswer(3)">
       </fa-icon>
-      <p id="question3" class="question">What was the site built with?</p>
+      <p id="question3" class="question">Does banning artists affect the music style of my recommendations?</p>
       <div id="answer-div-3" class="answer-div">
+        <p>No. We just filter songs from those artists out individually by the artist's Spotify ID.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <fa-icon 
+        id="expand-icon-4" 
+        class="expand-icon" 
+        [icon]="icons['icon4']" 
+        (click)="expandAnswer(4)">
+      </fa-icon>
+      <p id="question4" class="question">What was the site built with?</p>
+      <div id="answer-div-4" class="answer-div">
         <ul>
           <li>Angular</li>
-          <li>Node.Js</li>
-          <li>MongoDb</li>
-          <li>Express.Js</li>
-          <li>jQuery</li>
+          <li>Node.js</li>
+          <li>Express</li>
+          <li>MongoDB</li>
         </ul>
       </div>
     </div>
   </section>
 
+  <section>
+    <h3>Spotify API Deprecations</h3>
+
+    <div class="faq-item">
+      <fa-icon 
+        id="expand-icon-5" 
+        class="expand-icon" 
+        [icon]="icons['icon5']" 
+        (click)="expandAnswer(5)">
+      </fa-icon>
+      <p id="question5" class="question">What happened?</p>
+      <div id="answer-div-5" class="answer-div">
+        <p>Spotify API deprecated its /recommendations endpoint in
+          <a target="_blank" href="https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api">November 2024</a>.
+        This has unfortunately ended our music discovery use case for now but we may revive the project at some time
+        (see "Future Plans" below).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <fa-icon 
+        id="expand-icon-6" 
+        class="expand-icon" 
+        [icon]="icons['icon6']" 
+        (click)="expandAnswer(6)">
+      </fa-icon>
+      <p id="question6" class="question">How does that affect things?</p>
+      <div id="answer-div-6" class="answer-div">
+        <p>TrackHunter now issues the same 50 song recommendations in a loop. They're loaded from a JSON file 
+          that mimics a /recommendations response, so the site still handles and displays content dynamically
+          as though it received that data from Spotify.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <fa-icon 
+        id="expand-icon-7" 
+        class="expand-icon" 
+        [icon]="icons['icon7']" 
+        (click)="expandAnswer(7)">
+      </fa-icon>
+      <p id="question7" class="question">So what does TrackHunter actually do now, then?</p>
+      <div id="answer-div-7" class="answer-div">
+        <p id="users-perspective-p">From a <span class="bold">user's perspective:</span></p> 
+        <p>Unfortunately not much. TrackHunter doesn't have realistic use cases when forced to loop the same 50 recommended tracks.</p>
+        <p id="devs-perspective-p">From a <span class="bold">developer's pespective:</span> 
+        <p>It still filters songs that have already been viewed, still filters songs from banned artists, still fetches
+          seed tracks directly from the Spotify API, still acquires permissions from Spotify user accounts through 
+          OAuth 2.0, and still exports bookmarked tracks to a user's Spotify account. So it's still a full-stack 
+          website with database CRUDing that interacts with a 3rd party API.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <fa-icon 
+        id="expand-icon-8" 
+        class="expand-icon" 
+        [icon]="icons['icon8']" 
+        (click)="expandAnswer(8)">
+      </fa-icon>
+      <p id="question8" class="question">Any future plans for TrackHunter?</p>
+      <div id="answer-div-8" class="answer-div">
+        <p>We'd like to implement another song recommendation API service to the backend. The goal would be to make TrackHunter 
+          platform-agnostic by using songs' universal ISRC IDs. That way we could export a user's bookmarked songs to any platform 
+          that could support importing. We've checked out Deezer, last.fm, and other similar APIs for song recommendations but so far 
+          haven't found something that'll quite work at this time.</p>
+      </div>
+    </div>
+  </section>
+</section>
+
 
   
-  <section>
-    <h3>Asset Credits</h3>
+<section id="assets">
+  <h2>Asset Credits</h2>
 
-    <p>
-      Icons
-      <fa-icon [icon]="bookmarkIcon"></fa-icon>
-      <fa-icon [icon]="banIcon"></fa-icon>
-      <fa-icon [icon]="expandIcon"></fa-icon>
-      <fa-icon [icon]="shrinkIcon"></fa-icon>
-      - <a href="https://fontawesome.com/icons" target="_blank">FontAwesome</a> by FortAwesome
-    </p>
+  <p>
+    Icons
+    <fa-icon [icon]="bookmarkIcon"></fa-icon>
+    <fa-icon [icon]="banIcon"></fa-icon>
+    <fa-icon [icon]="expandIcon"></fa-icon>
+    <fa-icon [icon]="shrinkIcon"></fa-icon>
+    - <a href="https://fontawesome.com/icons" target="_blank">FontAwesome</a> by FortAwesome
+  </p>
 
-    <p>
-      Main Header Logo - 
-      <a href="https://thenounproject.com/icon/vinyl-record-player-4337083/">"Vinyl Record Player"</a>
-      by <a href="https://thenounproject.com/creator/heyrabbit/">Hey Rabbit</a>
-    </p>
+  <p>
+    Main Header Logo - 
+    <a href="https://thenounproject.com/icon/vinyl-record-player-4337083/">"Vinyl Record Player"</a>
+    by <a href="https://thenounproject.com/creator/heyrabbit/">Hey Rabbit</a>
+  </p>
 
-    <p>
-      Track Data & Recommendations -
-      <a href="https://developer.spotify.com/documentation/web-api">Spotify Web API</a>
-    </p>
-  </section>
-
-</div>
+  <p>
+    Track Data & Recommendations -
+    <a href="https://developer.spotify.com/documentation/web-api">Spotify Web API</a>
+  </p>
+</section>
 

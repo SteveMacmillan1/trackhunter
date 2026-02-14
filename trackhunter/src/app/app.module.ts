@@ -45,7 +45,7 @@ const appRoutes: Routes = [
   {path: 'bookmarked-tracks', component: BookmarkedTracksComponent, canActivate: [AuthGuard]},
   {path: 'banned-artists', component: BannedArtistsComponent, canActivate: [AuthGuard]},
   {path: 'viewed-tracks', component: ViewedTracksComponent, canActivate: [AuthGuard]},
-  {path: 'about', component: AboutComponent},
+  {path: 'faq', component: AboutComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'logout', component: LoggedOutComponent}
