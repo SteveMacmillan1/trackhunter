@@ -1,6 +1,6 @@
 // POST request for access token using Spotify API client_id and client_secret
 
-const helpers = require('./js/helpers.js');
+const helpers = require('./../js/helpers.js');
 require('dotenv').config({quiet: true})
 
 // Valid for 60 minutes
