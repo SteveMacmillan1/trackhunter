@@ -23,11 +23,11 @@ const MongoDBStore = require('connect-mongo');
 app.set('trust proxy', 1);
 const store = new MongoDBStore({
   mongoUrl: process.env.MONGO_URI,
-  collection: 'sessions'
-  // crypto: {
-  //   secret: process.env.SESSION_SECRET,
-  //   algorithm: 'aes-256-cbc',       
-  // },
+  collection: 'sessions',
+  crypto: {
+    secret: process.env.SESSION_SECRET,
+    algorithm: 'aes-256-cbc',       
+  },
 });
 
 const buildFolderPath = path.join(__dirname, 'spotifinder');
