@@ -153,7 +153,7 @@ export class TrackService {
 
 
   public getSiteUrl(): string {
-    return 'https://127.0.0.1:443';
-    // return 'https://trackhunter-2fde545b2aef.herokuapp.com';
+    // return 'https://127.0.0.1:443';
+    return 'https://trackhunter-production.up.railway.app';
   }
 }
