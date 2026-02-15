@@ -19,13 +19,13 @@ require('dotenv').config()
 
 console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
 const MongoDBStore = require('connect-mongo');
-// Railway's load balancer that might make Express suspicious
+// Railway's load balancer might make Express suspicious
 app.set('trust proxy', 1);
 const store = new MongoDBStore({
   mongoUrl: process.env.MONGO_URI,
   collection: 'sessions',
   crypto: {
-    secret: process.env.SESSION_SECRET,
+    secret: 'testsecret',
     algorithm: 'aes-256-cbc',       
   },
 });
