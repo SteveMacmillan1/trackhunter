@@ -30,7 +30,8 @@ const store = new MongoDBStore({
   },
 });
 
-app.use(express.static('spotifinder'));
+const buildFolderPath = path.join(__dirname, 'spotifinder');
+app.use(express.static(buildFolderPath));
 app.use(express.json());
 app.use(session({
   secret: process.env.SESSION_SECRET,
