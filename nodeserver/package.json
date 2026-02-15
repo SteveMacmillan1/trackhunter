@@ -1,13 +1,14 @@
 {
-  "name": "lolapitest",
+  "name": "trackhunter-server",
   "version": "1.0.0",
   "description": "",
-  "main": "files.js",
+  "main": "server.js",
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd ../trackhunter && npm install && npx ng build --configuration production --output-path ../nodeserver/spotifinder",
     "start": "node server.js"
   },
   "author": "",

@@ -30,16 +30,16 @@ const store = new MongoDBStore({
   },
 });
 
-
-app.use(express.static('spotifinder'));
+// build folder for localhost
+// app.use(express.static('spotifinder'));
 app.use(express.json());
 app.use(session({
-  secret: 'eifSdkfSF03nfdsDF03#84y3',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
   store: store,
   cookie: {
-    secure: true,     // * * * SECURITY ISSUE, temp workaround * * * 
+    secure: true,
     maxAge: 1000 * 60 * 60 * 24 * 365
   }
 }));
@@ -50,12 +50,12 @@ app.use(session({
 // * * *  SECURITY ISSUE  * * *
 // CORS should only be enabled for development (127.0.0.1:4200 -> 127.0.0.1:3000)
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "*");
+//   res.setHeader("Access-Control-Allow-Headers", "*");
+//   next();
+// });
 
   /*
   next() ensures the request continues to the next middleware in the stack. 
@@ -64,28 +64,31 @@ app.use((req, res, next) => {
 
 helpers.connectToMongo();
 
-// process.env.PORT
-// console.log('Starting server...')
-// app.listen(3000, () => {
-//     console.log('   Success: server listening on port ___');
-// });
+// Live environment server
+const PORT = process.env.PORT || 3000;
+console.log('Starting server...')
+app.listen(PORT, '0.0.0.0', () => {
+    console.log('   Success: server listening on port ' + PORT);
+});
 
-https.createServer(options, (req, res) => {
-  const host = req.headers.host;
-  // Spotify API mandates secure redirect URIs so site won't work using 'localhost', use 127.0.0.1 instead
-  if (host && host.includes('localhost')) {
-    res.writeHead(301, { Location: 'https://127.0.0.1${req.url}' });
-    return res.end();
-  }
-  app(req, res);
-  }).listen(443, '0.0.0.0', () => console.log('HTTPS server listening on port 443'));
 
-// Redirect server
-// ${req.url} preserves the original url subpage and params
-http.createServer((req, res) => {
-  res.writeHead(301, { Location: `https://127.0.0.1${req.url}` });
-  res.end();
-}).listen(80, '0.0.0.0', () => console.log("HTTP -> HTTPS redirect active"));
+// localhost server
+// https.createServer(options, (req, res) => {
+//   const host = req.headers.host;
+//   // Spotify API mandates secure redirect URIs so site won't work using 'localhost', use 127.0.0.1 instead
+//   if (host && host.includes('localhost')) {
+//     res.writeHead(301, { Location: 'https://127.0.0.1${req.url}' });
+//     return res.end();
+//   }
+//   app(req, res);
+//   }).listen(443, '0.0.0.0', () => console.log('HTTPS server listening on port 443'));
+
+// // Redirect server
+// // ${req.url} preserves the original url subpage and params
+// http.createServer((req, res) => {
+//   res.writeHead(301, { Location: `https://127.0.0.1${req.url}` });
+//   res.end();
+// }).listen(80, '0.0.0.0', () => console.log("HTTP -> HTTPS redirect active"));
 
 
 
