@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -11,15 +12,14 @@ const artists_db = require('./models/artists_db.js')
 const helpers = require('./js/helpers.js');
 const User = require('./models/interfaces/users.js');
 const path = require('path');
-// const siteUrl = 'https://127.0.0.1';
-const siteUrl = 'https://trackhunter-production.up.railway.app';
-// const options = {
-//   key: fs.readFileSync('crt/localhost-key.pem'),
-//   cert: fs.readFileSync('crt/localhost.pem')
-// };
-require('dotenv').config()
+const siteUrl = 'https://127.0.0.1';
+// const siteUrl = 'https://trackhunter-production.up.railway.app';
+const options = {
+  key: fs.readFileSync('crt/localhost-key.pem'),
+  cert: fs.readFileSync('crt/localhost.pem')
+};
 
-  
+console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');  
 const MongoDBStore = require('connect-mongo');
 const store = new MongoDBStore({
   mongoUrl: process.env.MONGO_URI,
@@ -65,30 +65,30 @@ app.use(session({
 helpers.connectToMongo();
 
 // Live environment server
-const PORT = process.env.PORT || 3000;
-console.log('Starting server...')
-app.listen(PORT, '0.0.0.0', () => {
-    console.log('   Success: server listening on port ' + PORT);
-});
+// const PORT = process.env.PORT || 3000;
+// console.log('Starting server...')
+// app.listen(PORT, '0.0.0.0', () => {
+//     console.log('   Success: server listening on port ' + PORT);
+// });
 
 
 // localhost server
-// https.createServer(options, (req, res) => {
-//   const host = req.headers.host;
-//   // Spotify API mandates secure redirect URIs so site won't work using 'localhost', use 127.0.0.1 instead
-//   if (host && host.includes('localhost')) {
-//     res.writeHead(301, { Location: 'https://127.0.0.1${req.url}' });
-//     return res.end();
-//   }
-//   app(req, res);
-//   }).listen(443, '0.0.0.0', () => console.log('HTTPS server listening on port 443'));
+https.createServer(options, (req, res) => {
+  const host = req.headers.host;
+  // Spotify API mandates secure redirect URIs so site won't work using 'localhost', use 127.0.0.1 instead
+  if (host && host.includes('localhost')) {
+    res.writeHead(301, { Location: 'https://127.0.0.1${req.url}' });
+    return res.end();
+  }
+  app(req, res);
+  }).listen(443, '0.0.0.0', () => console.log('HTTPS server listening on port 443'));
 
-// // Redirect server
-// // ${req.url} preserves the original url subpage and params
-// http.createServer((req, res) => {
-//   res.writeHead(301, { Location: `https://127.0.0.1${req.url}` });
-//   res.end();
-// }).listen(80, '0.0.0.0', () => console.log("HTTP -> HTTPS redirect active"));
+// Redirect server
+// ${req.url} preserves the original url subpage and params
+http.createServer((req, res) => {
+  res.writeHead(301, { Location: `https://127.0.0.1${req.url}` });
+  res.end();
+}).listen(80, '0.0.0.0', () => console.log("HTTP -> HTTPS redirect active"));
 
 
 
