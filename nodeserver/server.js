@@ -30,8 +30,7 @@ const store = new MongoDBStore({
   },
 });
 
-// build folder for localhost
-// app.use(express.static('spotifinder'));
+app.use(express.static('spotifinder'));
 app.use(express.json());
 app.use(session({
   secret: process.env.SESSION_SECRET,
