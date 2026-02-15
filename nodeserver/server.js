@@ -25,7 +25,7 @@ const store = new MongoDBStore({
   mongoUrl: process.env.MONGO_URI,
   collection: 'sessions',
   crypto: {
-    secret: process.env.ENCRYPTION_SECRET,
+    secret: process.env.SESSION_SECRET,
     algorithm: 'aes-256-cbc',       
   },
 });
