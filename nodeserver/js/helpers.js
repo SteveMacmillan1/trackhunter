@@ -19,6 +19,11 @@ function isAccessTokenInvalid(timeIssuedMs) {
     // Also (considered) invalid if it's 59 minutes or older
 }
 
+function getSiteUrl() {
+    // return 'https://127.0.0.1';
+    return 'https://trackhunter-production.up.railway.app'
+}
+
 /*
     /process-register user password validation checks
     The frontend has validation control but could technically be bypassed
@@ -77,6 +82,7 @@ function emailVal(email) {
 module.exports = {  
     connectToMongo,
     isAccessTokenInvalid,
+    getSiteUrl,
     passwordVal,
     emailVal
 }

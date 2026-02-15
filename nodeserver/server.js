@@ -11,8 +11,6 @@ const artists_db = require('./models/artists_db.js')
 const helpers = require('./js/helpers.js');
 const User = require('./models/interfaces/users.js');
 const path = require('path');
-// const siteUrl = 'https://127.0.0.1';
-const siteUrl = 'https://trackhunter-production.up.railway.app';
 // const options = {
 //   key: fs.readFileSync('crt/localhost-key.pem'),
 //   cert: fs.readFileSync('crt/localhost.pem')
@@ -21,6 +19,8 @@ require('dotenv').config()
 
 console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
 const MongoDBStore = require('connect-mongo');
+// Railway's load balancer that might make Express suspicious
+app.set('trust proxy', 1);
 const store = new MongoDBStore({
   mongoUrl: process.env.MONGO_URI,
   collection: 'sessions'
@@ -40,6 +40,7 @@ app.use(session({
   store: store,
   cookie: {
     secure: true,
+    sameSite: 'lax',
     maxAge: 1000 * 60 * 60 * 24 * 365
   }
 }));
@@ -463,7 +464,7 @@ app.get('/get-spotify-permissions', async(req, res) => {
   if (!req.session.userId)
     return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-  return res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + siteUrl + '/bookmarked-tracks');
+  return res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + this.helpers.getSiteUrl() + '/bookmarked-tracks');
 });
 
 
