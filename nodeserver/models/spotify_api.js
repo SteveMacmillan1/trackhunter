@@ -1,7 +1,7 @@
 // POST request for access token using Spotify API client_id and client_secret
 
-const siteUrl = 'https://127.0.0.1';
-// const siteUrl = 'https://trackhunter-production.up.railway.app';
+// const siteUrl = 'https://127.0.0.1';
+const siteUrl = 'https://trackhunter-production.up.railway.app';
 require('dotenv').config({quiet: true})
 
 // Valid for 60 minutes
