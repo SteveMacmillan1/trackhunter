@@ -18,6 +18,7 @@ const path = require('path');
 require('dotenv').config()
 
 console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
+const SESSION_SECRET = process.env.SESSION_SECRET.trim();
 const MongoDBStore = require('connect-mongo');
 // Railway's load balancer might make Express suspicious
 app.set('trust proxy', 1);
@@ -25,7 +26,7 @@ const store = new MongoDBStore({
   mongoUrl: process.env.MONGO_URI,
   collection: 'sessions',
   crypto: {
-    secret: 'testsecrettestsecrettestsecrette',
+    secret: SESSION_SECRET,
     algorithm: 'aes-256-cbc',       
   },
 });
