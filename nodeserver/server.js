@@ -13,10 +13,10 @@ const User = require('./models/interfaces/users.js');
 const path = require('path');
 const siteUrl = 'https://127.0.0.1';
 // const siteUrl = 'https://trackhunter-2fde545b2aef.herokuapp.com';
-const options = {
-  key: fs.readFileSync('crt/localhost-key.pem'),
-  cert: fs.readFileSync('crt/localhost.pem')
-};
+// const options = {
+//   key: fs.readFileSync('crt/localhost-key.pem'),
+//   cert: fs.readFileSync('crt/localhost.pem')
+// };
 require('dotenv').config()
 
   
