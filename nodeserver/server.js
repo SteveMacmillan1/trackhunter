@@ -465,7 +465,7 @@ app.get('/get-spotify-permissions', async(req, res) => {
   if (!req.session.userId)
     return res.status(401).json({ status: 'Fail', message: 'User not logged in' });
 
-  return res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + this.helpers.getSiteUrl() + '/bookmarked-tracks');
+  return res.status(303).redirect('https://accounts.spotify.com/authorize?response_type=code&client_id=' + process.env.SPOTIFY_API_KEY + '&scope=playlist-modify-private&redirect_uri=' + helpers.getSiteUrl() + '/bookmarked-tracks');
 });
 
 
