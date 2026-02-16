@@ -19,7 +19,7 @@ require('dotenv').config()
 
 console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
 // Railway's load balancer that might make Express suspicious
-app.set('trust proxy', 1);
+// app.set('trust proxy', 1);
 
 const { MongoStore, createWebCryptoAdapter } = require('connect-mongo');
 
