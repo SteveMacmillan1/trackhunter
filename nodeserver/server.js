@@ -23,10 +23,10 @@ app.set('trust proxy', 1);
 
 const { MongoStore, createWebCryptoAdapter } = require('connect-mongo');
 
-const store = new MongoStore({
+const store = MongoStore.create({
   mongoUrl: process.env.MONGO_URI,
   collectionName: 'sessions',
-  crypto: createWebCryptoAdapter({
+  cryptoAdapter: createWebCryptoAdapter({
     secret: process.env.SESSION_SECRET
   }),
 });
