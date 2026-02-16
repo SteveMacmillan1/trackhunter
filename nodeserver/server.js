@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const session = require('express-session');
 const app = express();
@@ -11,17 +12,17 @@ const artists_db = require('./models/artists_db.js')
 const helpers = require('./js/helpers.js');
 const User = require('./models/interfaces/users.js');
 const path = require('path');
+const { MongoStore, createWebCryptoAdapter } = require('connect-mongo');
 // const options = {
 //   key: fs.readFileSync('crt/localhost-key.pem'),
 //   cert: fs.readFileSync('crt/localhost.pem')
 // };
-require('dotenv').config()
 
-console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
-// Railway's load balancer that might make Express suspicious
-// app.set('trust proxy', 1);
 
-const { MongoStore, createWebCryptoAdapter } = require('connect-mongo');
+// Railway's load balancer makes Express suspicious
+// Sessions won't work properly without this
+app.set('trust proxy', 1);
+
 
 const store = MongoStore.create({
   mongoUrl: process.env.MONGO_URI,
@@ -41,7 +42,6 @@ app.use(session({
   store: store,
   cookie: {
     secure: true,
-    sameSite: 'lax',
     maxAge: 1000 * 60 * 60 * 24 * 365
   }
 }));
