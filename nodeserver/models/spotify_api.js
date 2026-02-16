@@ -22,7 +22,7 @@ async function getAccessToken() {
     // This will run when user clicks "Add App Permissions" from the Bookmarked Tracks page
     // Valid for a renewed 60 minutes
 async function upgradeAccessToken(code) {
-    var body = 'grant_type=authorization_code&code=' + code + '&redirect_uri=' + this.helpers.getSiteUrl() + '/bookmarked-tracks';
+    var body = 'grant_type=authorization_code&code=' + code + '&redirect_uri=' + helpers.getSiteUrl() + '/bookmarked-tracks';
 
     var data = await fetch('https://accounts.spotify.com/api/token', {
         method: 'POST',
