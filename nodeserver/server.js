@@ -18,16 +18,17 @@ const path = require('path');
 require('dotenv').config()
 
 console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
-const { createWebCryptoAdapter } = require('connect-mongo');
-const MongoDBStore = require('connect-mongo');
 // Railway's load balancer might make Express suspicious
 app.set('trust proxy', 1);
-const store = MongoDBStore.create({
+
+const MongoStore = require('connect-mongo');
+
+const store = MongoStore.create({
   mongoUrl: process.env.MONGO_URI,
-  collection: 'sessions',
-  cryptoAdapter: createWebCryptoAdapter({
-    secret: process.env.SESSION_SECRET,
-  }),
+  collectionName: 'sessions',
+  crypto: {
+    secret: process.env.SESSION_SECRET
+  }
 });
 
 const buildFolderPath = path.join(__dirname, 'spotifinder');
