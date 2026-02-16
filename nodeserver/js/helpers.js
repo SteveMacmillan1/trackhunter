@@ -20,8 +20,8 @@ function isAccessTokenInvalid(timeIssuedMs) {
 }
 
 function getSiteUrl() {
-    // return 'https://127.0.0.1';
-    return 'https://trackhunter-production.up.railway.app'
+    return 'https://127.0.0.1';
+    // return 'https://trackhunter-production.up.railway.app'
 }
 
 /*
