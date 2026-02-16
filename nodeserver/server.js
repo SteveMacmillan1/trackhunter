@@ -18,17 +18,21 @@ const path = require('path');
 require('dotenv').config()
 
 console.log('DEBUG: SESSION_SECRET length is:', process.env.SESSION_SECRET ? process.env.SESSION_SECRET.length : 'NULL/UNDEFINED');
-// Railway's load balancer might make Express suspicious
+// Railway's load balancer that might make Express suspicious
 app.set('trust proxy', 1);
 
 const MongoStore = require('connect-mongo');
+console.log('Type:', typeof MongoStore);
+console.log('Keys:', Object.keys(MongoStore));
+console.log('MongoStore itself:', MongoStore);
 
-const store = MongoStore.create({
+const store = new MongoStore({
   mongoUrl: process.env.MONGO_URI,
-  collectionName: 'sessions',
+  collection: 'sessions',
   crypto: {
-    secret: process.env.SESSION_SECRET
-  }
+    secret: process.env.SESSION_SECRET,
+    algorithm: 'aes-256-cbc',       
+  },
 });
 
 const buildFolderPath = path.join(__dirname, 'spotifinder');
