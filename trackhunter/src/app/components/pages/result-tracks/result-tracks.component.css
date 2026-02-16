@@ -3,7 +3,7 @@
 }
 
 #no-more-results-div {
-  font-size: 16px;
+  font-size: 1em;
 }
 
 a {
@@ -32,3 +32,9 @@ a {
 #next-btn {
   cursor: pointer;
 }
+
+@media only screen and (max-width: 1000px) {
+  #next-btn {
+      margin-bottom: 10px;
+    }
+  }

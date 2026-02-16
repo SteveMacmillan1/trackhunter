@@ -20,7 +20,6 @@ export class SeedTrackCardComponent {
 
 
   ngOnInit() {
-    console.log(this.track)
     // Truncate fields "gracefully"
     // i.e. don't split words, truncate at last space before limit
     this.truncTrackName = this.trackService.trimTrackField(this.track?.name, 70);

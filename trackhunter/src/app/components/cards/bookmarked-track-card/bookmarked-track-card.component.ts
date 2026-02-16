@@ -23,7 +23,6 @@ export class BookmarkedTrackCardComponent {
   constructor(private trackService: TrackService) {}
 
   ngOnInit() {
-    console.log(this.track)
     // Truncate song title "gracefully"
     // i.e. don't split words, truncate at last space before limit
     this.truncTrackName = this.trackService.trimTrackField(this.track?.trackName, 70);

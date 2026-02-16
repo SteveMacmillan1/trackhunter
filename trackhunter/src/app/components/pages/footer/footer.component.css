@@ -16,7 +16,7 @@ p {
 }
 
 #pwd-by-txt {
-  font-size: 12px;
+  font-size: 0.75em;
   flex: 1;
 }
 
@@ -28,7 +28,7 @@ p {
   position: absolute;
   top: 3px;
   right: 0;
-  font-size: 11px;
+  font-size: 0.75em;
 }
 
 #badges-div {
@@ -72,4 +72,10 @@ img {
   width: 64px;
   height: 18px;
   pointer-events: auto;
+}
+
+@media only screen and (max-width: 650px) {
+  #copyright {
+    position: static;
+  }
 }

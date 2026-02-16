@@ -11,6 +11,16 @@ div.card:hover {
   background-color: #181a1b;
 }
 
+@media only screen and (max-width: 800px) {
+  .seed-card-container-div {
+    width: 100%;
+  }
+
+  .album-cover-div {
+    height: 100%;
+  }
+}
+
 @media only screen and (max-width: 730px) {
   .card {
       height: 110px;
@@ -18,5 +28,45 @@ div.card:hover {
 
   .card-text {
     height: 100%;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .album-cover-img {
+    height: 70px;
+    width: 70px;
+  }
+
+  .track-title {
+    font-size: 0.9em;
+  }
+
+  .track-artist {
+    font-size: 0.78em;
+  }
+
+  .card-text {
+    min-width: 210px;
+  }
+
+  .view-on-spotify-div {
+    min-width: 0;
+  }
+
+  .spotify-logo {
+    clear: left;
+    margin-left: 0;
+  }
+
+  .view-on-spotify-text {
+    width: 55px;
+    max-width: 55px;
+    text-align: center;
+  }
+}
+
+@media only screen and (max-width: 510px) {
+  .view-on-spotify-div {
+    align-items: flex-end;
   }
 }

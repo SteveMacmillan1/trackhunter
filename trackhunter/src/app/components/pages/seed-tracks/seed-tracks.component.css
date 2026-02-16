@@ -18,7 +18,7 @@
   opacity: 0;
 }
 
-#search-div input {
+#search-field {
   width: 300px;
 }
 
@@ -59,11 +59,11 @@
 }
 
 #deep-tracks-text {
-  font-size: 13px;
+  font-size: 0.81em;
 }
 
 #big-hits-text {
-  font-size: 13px;
+  font-size: 0.81em;
   float: right;
 }
 
@@ -97,7 +97,7 @@ footer {
   position: relative;
   left: 16px;
   bottom: 16px;
-  font-size: 16px;
+  font-size: 1em;
 }
 
 .slider {
@@ -118,4 +118,22 @@ footer {
 
 #confirm {
   margin: 0;
+}
+
+@media only screen and (max-width: 800px) {
+  .seed-card-container-div {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 465px) {
+  .seed-card-container-div {
+    max-width: 90vw;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  #search-field input {
+    max-width: 250px;
+  }
 }

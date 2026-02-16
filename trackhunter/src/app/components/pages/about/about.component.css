@@ -24,13 +24,13 @@
 }
 
 p {
-  font-size: 15px;
+  font-size: 0.94em;
   line-height: 1.25em;
 }
 
 h2 {
   text-align: center;
-  font-size: 20px;
+  font-size: 1.25em;
   margin: 40px 0px;
 }
 
@@ -44,7 +44,7 @@ ul {
 }
 
 li {
-  font-size: 15px;
+  font-size: 0.94em;
 }
 
 .fineprint {
@@ -99,8 +99,12 @@ fa-icon, .badge {
 
 
 @media only screen and (max-width: 465px) {
-  #about {
+  #about, #faq, #assets {
     max-width: 90vw;
+  }
+
+  .answer-div {
+    margin-left: 10px;
   }
 }
 
